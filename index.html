@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recess Games | Nostalgic Childhood Games Online</title>
+<meta name="description" content="Relive the magic of childhood with nostalgic schoolyard games, from paper fortune tellers and pick-up sticks to Eraser Battle and Malaysian Ceper.">
+<!-- TODO: replace with your production origin -->
+<link rel="canonical" href="https://recessgames.example/">
+<meta property="og:title" content="Recess Games | Nostalgic Childhood Games Online">
+<meta property="og:description" content="The Little Games That Made Big Memories.">
+<meta property="og:image" content="assets/desk.jpg">
+<link rel="preload" as="image" href="assets/desk.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap">
+<style>
+:root{--ink:#2b2118;--paper:#f4ead2;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,.8,.3,1);
+  --hand:"Caveat","Segoe Print","Bradley Hand",cursive}
+*{box-sizing:border-box}
+html,body{margin:0;background:#e9dcc0;color:var(--ink)}
+body{min-height:100vh;display:flex;align-items:center;justify-content:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+main{width:100%}
+/* On narrow screens the desk keeps a readable size and pans sideways instead of shrinking the objects. */
+.scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.stage{position:relative;width:max(100%,980px);max-width:1900px;margin:0 auto;aspect-ratio:2048/1152;
+  container-type:inline-size;background:url(assets/desk.jpg) center/100% 100% no-repeat;isolation:isolate}
+.stage>img.bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
+
+.note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:.9cqw 1.1cqw 1cqw;background:var(--paper);
+  transform:rotate(-1.6deg);box-shadow:.1cqw .35cqw .8cqw rgba(60,35,15,.3);font-family:var(--hand);z-index:1;
+  clip-path:polygon(0 1%,4% 0,100% 1.5%,99% 100%,60% 98.5%,0 100%)}
+.note::before{content:"";position:absolute;left:38%;top:-.9cqw;width:6cqw;height:1.8cqw;background:rgba(236,214,150,.8);transform:rotate(2deg)}
+.note .tag{margin:0;font-size:1.05cqw;font-weight:600;opacity:.75}
+.note .head{margin:.2cqw 0 0;font-size:2cqw;line-height:1.02;font-weight:700}
+
+/* Stationary hit-area wrapper; only .lift moves, so hover never flickers. */
+.obj{color:var(--ink);text-decoration:none;position:absolute;display:block;z-index:2;-webkit-tap-highlight-color:transparent;outline:none;
+  left:var(--x);top:var(--y);width:var(--w);height:var(--h);padding:0;cursor:pointer;--rot:0deg}
+.obj:hover,.obj:focus-visible,.obj.is-selected{z-index:20}
+.lift{position:absolute;inset:0;transform-origin:50% 85%;pointer-events:none;
+  transition:transform .55s var(--ease),filter .4s var(--ease)}
+.lift img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.shadow{position:absolute;left:8%;right:8%;bottom:-2%;height:14%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(50,25,8,.45),transparent);opacity:0;transform:scale(.7);
+  transition:opacity .4s var(--ease),transform .55s var(--spring)}
+.obj:hover .lift,.obj:focus-visible .lift,.obj.is-selected .lift{
+  transform:translateY(-6%) scale(1.14) rotate(var(--rot));
+  filter:drop-shadow(0 1.1cqw .9cqw rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}
+.obj:hover .shadow,.obj:focus-visible .shadow,.obj.is-selected .shadow{opacity:1;transform:scale(1.1) translateY(1.2cqw)}
+.obj:focus-visible::after{content:"";position:absolute;inset:-6%;border:.25cqw dashed var(--paper);border-radius:1.2cqw;
+  box-shadow:0 0 0 .2cqw var(--ink);pointer-events:none}
+.obj.fallback:hover .lift,.obj.fallback.is-selected .lift{animation:wob .9s ease-in-out infinite alternate}
+@keyframes wob{to{transform:translateY(-6%) scale(1.14) rotate(calc(var(--rot) * -1))}}
+
+.label{position:absolute;left:50%;bottom:104%;padding:.5cqw 1.3cqw .6cqw;white-space:nowrap;pointer-events:none;
+  background:var(--paper) repeating-linear-gradient(transparent 0 1.3cqw,rgba(90,130,190,.22) 1.3cqw 1.38cqw);
+  font:700 2.2cqw/1 var(--hand);text-align:center;box-shadow:.1cqw .3cqw .7cqw rgba(50,25,8,.35);
+  opacity:0;transform:translate(-50%,1cqw) rotate(-3deg) scale(.85);transition:opacity .25s,transform .45s var(--spring)}
+.label::before{content:"";position:absolute;left:50%;top:-.7cqw;width:3.6cqw;height:1.2cqw;margin-left:-1.8cqw;background:rgba(236,214,150,.85);transform:rotate(-4deg)}
+.label small{display:none;font-size:1.5cqw;opacity:.7}
+@media (hover:none){.label small{display:block}}
+.obj:hover .label,.obj:focus-visible .label,.obj.is-selected .label{opacity:1;transform:translate(-50%,0) rotate(-3deg) scale(1)}
+
+.play{position:absolute;left:34.6%;top:82.5%;width:31%;height:11.2%;z-index:2;border-radius:.8cqw;outline:none;transition:transform .4s var(--spring)}
+.play:hover{transform:translateY(-.5cqw) rotate(-.6deg)}
+.play:focus-visible{box-shadow:0 0 0 .3cqw var(--paper),0 0 0 .5cqw var(--ink)}
+
+.obj.launching{z-index:30}
+.obj.launching .lift{transform:translateY(-10%) scale(1.45) rotate(var(--rot));transition:transform .5s var(--ease)}
+.stage.leaving .obj:not(.launching){opacity:.35;transition:opacity .4s}
+@media (prefers-reduced-motion:reduce){
+  .lift,.shadow,.label,.play{transition:opacity .2s!important}
+  .obj:hover .lift,.obj:focus-visible .lift,.obj.is-selected .lift,.obj.launching .lift{transform:none!important}
+  .obj.fallback .lift{animation:none!important}}
+
+/* ---------- motion ---------- */
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(105deg,transparent 42%,rgba(255,238,190,.16) 50%,transparent 58%) 0 0/260% 100%;animation:sweep 11s linear infinite}
+@keyframes sweep{from{background-position:130% 0}to{background-position:-130% 0}}
+.obj{animation:drop .9s var(--spring) backwards;animation-delay:calc(var(--n)*.14s + .25s)}
+@keyframes drop{0%{opacity:0;transform:translateY(-55%) scale(1.5) rotate(calc(var(--rot)*3))}60%{opacity:1}}
+.obj img{animation:var(--idle) var(--dur,4s) ease-in-out infinite;animation-delay:calc(var(--n)*.14s + 1.4s)}
+.obj:hover img,.obj:focus-visible img,.obj.is-selected img,.obj.launching img{animation:none}
+@keyframes snap{0%,100%{transform:none}35%{transform:scale(1.05,.95) rotate(2.5deg)}65%{transform:scale(.97,1.04) rotate(-2deg)}}
+@keyframes sway{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.6deg) translateX(.5%)}}
+@keyframes tap{0%,45%,100%{transform:none}12%{transform:translateY(-4%) rotate(-3deg)}25%{transform:translateY(0) rotate(2deg)}35%{transform:translateY(-2%)}}
+@keyframes breathe{0%,100%{transform:none}50%{transform:translateY(-1.5%) rotate(.8deg)}}
+@keyframes wobble{0%,100%{transform:none}25%{transform:rotate(3deg) scale(1.03)}75%{transform:rotate(-3deg) scale(1.03)}}
+.obj.nudge .lift{animation:hop .95s var(--spring)}
+@keyframes hop{0%,100%{transform:none}30%{transform:translateY(-10%) scale(1.08) rotate(var(--rot))}55%{transform:none}72%{transform:translateY(-3%)}}
+
+.spark{position:absolute;font-style:normal;font-size:2cqw;line-height:1;color:#ffe7a0;text-shadow:0 0 .6cqw rgba(255,190,70,.95);opacity:0;pointer-events:none;z-index:2}
+.s1{left:-7%;top:-3%}.s2{right:-9%;top:8%}.s3{left:0;bottom:4%}.s4{right:-5%;bottom:-3%}
+.obj:hover .spark,.obj:focus-visible .spark,.obj.is-selected .spark{animation:pop .6s var(--spring) both,twinkle 1.3s ease-in-out .7s infinite}
+.obj:hover .s2,.obj:focus-visible .s2,.obj.is-selected .s2{animation-delay:.08s,.8s}
+.obj:hover .s3,.obj:focus-visible .s3,.obj.is-selected .s3{animation-delay:.16s,.9s}
+.obj:hover .s4,.obj:focus-visible .s4,.obj.is-selected .s4{animation-delay:.24s,1s}
+@keyframes pop{0%{opacity:0;transform:scale(0) rotate(0)}45%{opacity:1;transform:scale(1.4) rotate(90deg)}100%{opacity:.95;transform:scale(1) rotate(180deg)}}
+@keyframes twinkle{0%,100%{opacity:.95;transform:scale(1) rotate(180deg)}50%{opacity:.3;transform:scale(.65) rotate(230deg)}}
+
+.note,.slip,.hint{animation:slipin .8s var(--spring) backwards}
+.note{animation-delay:.1s}.slip{animation-delay:.9s}.hint{animation-delay:1.3s}
+@keyframes slipin{from{opacity:0;transform:translateY(-6cqw) rotate(-14deg) scale(.8)}}
+.head .w{display:inline-block;animation:rise .7s var(--spring) backwards;animation-delay:calc(var(--i)*.1s + .5s)}
+@keyframes rise{from{opacity:0;transform:translateY(1.4cqw) rotate(7deg)}}
+.head .w:hover{animation:jig .45s;animation-delay:0s}
+@keyframes jig{50%{transform:translateY(-.4cqw) rotate(-6deg) scale(1.12)}}
+
+.slip{position:absolute;left:5.8%;top:77.5%;width:24%;margin:0;padding:1cqw 1.3cqw .9cqw;background:var(--paper);transform:rotate(1.4deg);box-shadow:.1cqw .3cqw .7cqw rgba(60,35,15,.3);z-index:1;clip-path:polygon(0 2%,100% 0,98% 100%,2% 98%)}
+.slip::before,.slip::after{content:"✦";position:absolute;color:#d9a21b;font-size:1.5cqw;animation:twinkle 2.2s ease-in-out infinite}
+.slip::before{right:.8cqw;top:.4cqw}.slip::after{right:2.8cqw;bottom:.3cqw;font-size:1cqw;animation-delay:.9s}
+.wave{display:block;font:700 2.3cqw/1 var(--hand);white-space:nowrap}
+.wave .l{display:inline-block;animation:bob 2s ease-in-out infinite;animation-delay:calc(var(--i)*.08s + 1.6s)}
+.wave .l.sp{width:.6cqw}
+.wave .l:nth-child(4n+1){color:#b8392b}.wave .l:nth-child(4n+2){color:#2f6aa8}.wave .l:nth-child(4n+3){color:#c58e0c}.wave .l:nth-child(4n){color:#2c7a73}
+@keyframes bob{0%,55%,100%{transform:none}28%{transform:translateY(-.55cqw) rotate(-5deg)}}
+.slip .sub{display:block;margin-top:.35cqw;font:600 1.45cqw/1 var(--hand);opacity:.8}
+.hint{position:absolute;left:79.5%;top:70%;width:15%;margin:0;font:700 2.1cqw/1.05 var(--hand);color:#fbf1d8;text-shadow:.1cqw .15cqw .3cqw rgba(50,25,8,.7);transform:rotate(-2deg);z-index:1;pointer-events:none}
+.hint svg{display:block;width:4.5cqw;height:6cqw;margin:0 0 .3cqw 1cqw;fill:none;stroke:#fbf1d8;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(.1cqw .15cqw .2cqw rgba(50,25,8,.6))}
+.hint path{stroke-dasharray:100;animation:draw 3.2s ease-in-out 2s infinite}
+@keyframes draw{0%{stroke-dashoffset:100}40%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.hint path{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="sr">Recess Games: Childhood Games We Played Between Classes</h1>
+  <div class="scroller">
+    <div class="stage" id="stage">
+      <section class="note" aria-label="Welcome">
+        <p class="tag">Childhood Games We Played Between Classes</p>
+        <p class="head">The Little Games That Made Big Memories.</p>
+      </section>
+      <p class="slip"><span class="wave">Remember these?</span><span class="sub">Pick one. Press play.</span></p>
+      <p class="hint"><svg viewBox="0 0 60 80" aria-hidden="true"><path pathLength="100" d="M50 76 C54 50 40 30 16 10 M30 8 L16 10 L20 24"/></svg>Pick Something From the Desk.</p>
+
+      <nav aria-label="Games" style="display:contents">
+        <!-- Routes and GIF paths are assumptions: edit href / data-gif to match the real project. -->
+        <a class="obj" href="games/paper-fortune-teller/" data-gif="assets/gifs/fortune.gif" style="--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
+          <span class="shadow"></span><span class="lift"><img src="assets/objects/fortune.png" width="350" height="340" alt=""></span><span class="label">Paper Fortune Teller<small>Open →</small></span></a>
+        <a class="obj" href="games/pick-up-sticks/" data-gif="assets/gifs/sticks.gif" style="--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
+          <span class="shadow"></span><span class="lift"><img src="assets/objects/sticks.png" width="315" height="263" alt=""></span><span class="label">Pick-Up Sticks<small>Open →</small></span></a>
+        <a class="obj" href="games/eraser-battle/" data-gif="assets/gifs/erasers.gif" style="--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
+          <span class="shadow"></span><span class="lift"><img src="assets/objects/erasers.png" width="178" height="129" alt=""></span><span class="label">Eraser Battle<small>Open →</small></span></a>
+        <a class="obj" href="games/square-grid/" data-gif="assets/gifs/notebook.gif" style="--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
+          <span class="shadow"></span><span class="lift"><img src="assets/objects/notebook.png" width="334" height="276" alt=""></span><span class="label">Square Grid<small>Open →</small></span></a>
+        <a class="obj" href="games/bottle-cap-game/" data-gif="assets/gifs/caps.gif" style="--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
+          <span class="shadow"></span><span class="lift"><img src="assets/objects/caps.png" width="213" height="287" alt=""></span><span class="label">Bottle Cap Game<small>Open →</small></span></a>
+      </nav>
+
+      <!-- Sits over the painted "PLAY NOW" strip; opens a random game. -->
+      <a class="play" id="play" href="games/paper-fortune-teller/" aria-label="Play now: open a random game"></a>
+    </div>
+  </div>
+</main>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const touch = matchMedia('(hover: none)').matches;
+  const stage = document.getElementById('stage');
+  const objs = [...stage.querySelectorAll('.obj')];
+  let busy = false, selected = null;
+
+  // Preload each object's own GIF once; mark objects whose GIF is missing so they get a CSS wiggle instead.
+  const ready = new Map();
+  const preload = () => objs.forEach(o => {
+    const im = new Image();
+    im.onload = () => ready.set(o, true);
+    im.onerror = () => o.classList.add('fallback');
+    im.src = o.dataset.gif;
+  });
+  if ('requestIdleCallback' in window) requestIdleCallback(preload, { timeout: 1500 }); else setTimeout(preload, 300);
+
+  // Swap artwork only on enter/leave (never on pointermove) so the GIF isn't restarted while hovering.
+  const play = o => { const i = o.querySelector('img'); if (!reduce && ready.get(o) && i.dataset.on !== '1') { i.dataset.on = '1'; i.src = o.dataset.gif; } };
+  const rest = o => { const i = o.querySelector('img'); if (i.dataset.on === '1') { i.dataset.on = ''; i.src = i.dataset.still; } };
+  objs.forEach(o => {
+    const i = o.querySelector('img'); i.dataset.still = i.getAttribute('src');
+    o.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse' || e.pointerType === 'pen') play(o); });
+    o.addEventListener('pointerleave', () => { if (o !== selected) rest(o); });
+    o.addEventListener('focus', () => play(o));
+    o.addEventListener('blur', () => { if (o !== selected) rest(o); });
+
+    o.addEventListener('click', e => {
+      e.preventDefault();
+      if (busy) return;
+      if (touch && selected !== o) {            // touch: first tap lifts + names it, second tap opens
+        if (selected) { selected.classList.remove('is-selected'); rest(selected); }
+        selected = o; o.classList.add('is-selected'); play(o); return;
+      }
+      busy = true; o.classList.add('launching'); stage.classList.add('leaving'); play(o);
+      setTimeout(() => { location.href = o.href; }, reduce ? 0 : 650);
+    });
+  });
+  document.addEventListener('click', e => {      // tap the desk to put the selected object back
+    if (selected && !e.target.closest('.obj')) { selected.classList.remove('is-selected'); rest(selected); selected = null; }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && selected) { selected.classList.remove('is-selected'); rest(selected); selected = null; } });
+
+  document.getElementById('play').addEventListener('click', e => {
+    e.preventDefault(); if (busy) return; busy = true;
+    location.href = objs[Math.floor(Math.random() * objs.length)].href;
+  });
+  // Back/forward cache: restore the hub to its idle state.
+  addEventListener('pageshow', e => { if (e.persisted) { busy = false; stage.classList.remove('leaving'); objs.forEach(o => { o.classList.remove('launching', 'is-selected'); rest(o); }); selected = null; } });
+
+  // Playful text: headline words rise in (and jiggle on hover); "Remember these?" bounces letter by letter.
+  const split = (el, byWord) => {
+    const t = el.textContent.trim();
+    const bits = byWord ? t.split(' ').map((w, i) => `<span class="w" aria-hidden="true" style="--i:${i}">${w}</span>`).join(' ')
+      : [...t].map((c, i) => `<span class="l${c === ' ' ? ' sp' : ''}" aria-hidden="true" style="--i:${i}">${c === ' ' ? '' : c}</span>`).join('');
+    el.innerHTML = `<span class="sr">${t}</span>` + bits;
+  };
+  split(stage.querySelector('.head'), true); split(stage.querySelector('.wave'), false);
+  objs.forEach(o => o.insertAdjacentHTML('beforeend', '<i class="spark s1" aria-hidden="true">✦</i><i class="spark s2" aria-hidden="true">✦</i><i class="spark s3" aria-hidden="true">✧</i><i class="spark s4" aria-hidden="true">✦</i>'));
+  // Every few seconds a random idle object hops, as if asking to be picked.
+  if (!reduce) setInterval(() => {
+    if (busy || document.hidden) return;
+    const c = objs.filter(o => !o.matches(':hover,:focus-visible,.is-selected')), o = c[Math.floor(Math.random() * c.length)];
+    if (o) { o.classList.add('nudge'); setTimeout(() => o.classList.remove('nudge'), 1000); }
+  }, 2600);
+  // Start the narrow-screen pan centred on the objects.
+  const sc = document.querySelector('.scroller'); sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) * 0.5;
+})();
+</script>
+</body>
+</html>
