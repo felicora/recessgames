@@ -10,29 +10,30 @@
 <meta property="og:title" content="Recess Games | Nostalgic Childhood Games Online">
 <meta property="og:description" content="The Little Games That Made Big Memories.">
 <meta property="og:image" content="desk.jpg">
-<link rel="preload" as="image" href="desk.jpg">
+<link rel="preload" as="image" href="desk.jpg" media="(min-aspect-ratio: 4/5)">
+<link rel="preload" as="image" href="wood.jpg" media="(max-aspect-ratio: 4/5)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap">
 <style>
-:root{--ink:#2b2118;--paper:#f4ead2;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,.8,.3,1);
+:root{--k:1;--ink:#2b2118;--paper:#f4ead2;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,.8,.3,1);
   --hand:"Caveat","Segoe Print","Bradley Hand",cursive}
 *{box-sizing:border-box}
-html,body{margin:0;background:#e9dcc0;color:var(--ink)}
+html,body{overflow-x:hidden;margin:0;background:#e9dcc0;color:var(--ink)}
 body{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 main{width:100%}
 /* On narrow screens the desk keeps a readable size and pans sideways instead of shrinking the objects. */
-.scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.stage{position:relative;width:max(100%,980px);max-width:1900px;margin:0 auto;aspect-ratio:2048/1152;
+.scroller{overflow-x:clip;overflow-y:visible}
+.stage{position:relative;width:min(100%,calc(100vh*1.7778));width:min(100%,calc(100svh*1.7778));min-width:min(100%,640px);max-width:1900px;margin:0 auto;aspect-ratio:2048/1152;
   container-type:inline-size;background:url(desk.jpg) center/100% 100% no-repeat;isolation:isolate}
 .stage>img.bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
 
-.note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:.9cqw 1.1cqw 1cqw;background:var(--paper);
-  transform:rotate(-1.6deg);box-shadow:.1cqw .35cqw .8cqw rgba(60,35,15,.3);font-family:var(--hand);z-index:1;
+.note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:calc(.9cqw*var(--k)) calc(1.1cqw*var(--k)) calc(1cqw*var(--k));background:var(--paper);
+  transform:rotate(-1.6deg);box-shadow:calc(.1cqw*var(--k)) calc(.35cqw*var(--k)) calc(.8cqw*var(--k)) rgba(60,35,15,.3);font-family:var(--hand);z-index:1;
   clip-path:polygon(0 1%,4% 0,100% 1.5%,99% 100%,60% 98.5%,0 100%)}
-.note::before{content:"";position:absolute;left:38%;top:-.9cqw;width:6cqw;height:1.8cqw;background:rgba(236,214,150,.8);transform:rotate(2deg)}
-.note .tag{margin:0;font-size:1.05cqw;font-weight:600;opacity:.75}
-.note .head{margin:.2cqw 0 0;font-size:2cqw;line-height:1.02;font-weight:700}
+.note::before{content:"";position:absolute;left:38%;top:calc(-.9cqw*var(--k));width:calc(6cqw*var(--k));height:calc(1.8cqw*var(--k));background:rgba(236,214,150,.8);transform:rotate(2deg)}
+.note .tag{margin:0;font-size:calc(1.05cqw*var(--k));font-weight:600;opacity:.75}
+.note .head{margin:calc(.2cqw*var(--k)) 0 0;font-size:calc(2cqw*var(--k));line-height:1.02;font-weight:700}
 
 /* Stationary hit-area wrapper; only .lift moves, so hover never flickers. */
 .obj{color:var(--ink);text-decoration:none;position:absolute;display:block;z-index:2;-webkit-tap-highlight-color:transparent;outline:none;
@@ -46,25 +47,25 @@ main{width:100%}
   transition:opacity .4s var(--ease),transform .55s var(--spring)}
 .obj:hover .lift,.obj:focus-visible .lift,.obj.is-selected .lift{
   transform:translateY(-6%) scale(1.14) rotate(var(--rot));
-  filter:drop-shadow(0 1.1cqw .9cqw rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}
-.obj:hover .shadow,.obj:focus-visible .shadow,.obj.is-selected .shadow{opacity:1;transform:scale(1.1) translateY(1.2cqw)}
-.obj:focus-visible::after{content:"";position:absolute;inset:-6%;border:.25cqw dashed var(--paper);border-radius:1.2cqw;
-  box-shadow:0 0 0 .2cqw var(--ink);pointer-events:none}
+  filter:drop-shadow(0 calc(1.1cqw*var(--k)) calc(.9cqw*var(--k)) rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}
+.obj:hover .shadow,.obj:focus-visible .shadow,.obj.is-selected .shadow{opacity:1;transform:scale(1.1) translateY(calc(1.2cqw*var(--k)))}
+.obj:focus-visible::after{content:"";position:absolute;inset:-6%;border:calc(.25cqw*var(--k)) dashed var(--paper);border-radius:calc(1.2cqw*var(--k));
+  box-shadow:0 0 0 calc(.2cqw*var(--k)) var(--ink);pointer-events:none}
 .obj.fallback:hover .lift,.obj.fallback.is-selected .lift{animation:wob .9s ease-in-out infinite alternate}
 @keyframes wob{to{transform:translateY(-6%) scale(1.14) rotate(calc(var(--rot) * -1))}}
 
-.label{position:absolute;left:50%;bottom:104%;padding:.5cqw 1.3cqw .6cqw;white-space:nowrap;pointer-events:none;
-  background:var(--paper) repeating-linear-gradient(transparent 0 1.3cqw,rgba(90,130,190,.22) 1.3cqw 1.38cqw);
-  font:700 2.2cqw/1 var(--hand);text-align:center;box-shadow:.1cqw .3cqw .7cqw rgba(50,25,8,.35);
-  opacity:0;transform:translate(-50%,1cqw) rotate(-3deg) scale(.85);transition:opacity .25s,transform .45s var(--spring)}
-.label::before{content:"";position:absolute;left:50%;top:-.7cqw;width:3.6cqw;height:1.2cqw;margin-left:-1.8cqw;background:rgba(236,214,150,.85);transform:rotate(-4deg)}
-.label small{display:none;font-size:1.5cqw;opacity:.7}
+.label{position:absolute;left:50%;bottom:104%;padding:calc(.5cqw*var(--k)) calc(1.3cqw*var(--k)) calc(.6cqw*var(--k));white-space:nowrap;pointer-events:none;
+  background:var(--paper) repeating-linear-gradient(transparent 0 calc(1.3cqw*var(--k)),rgba(90,130,190,.22) calc(1.3cqw*var(--k)) calc(1.38cqw*var(--k)));
+  font:700 calc(2.2cqw*var(--k))/1 var(--hand);text-align:center;box-shadow:calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) calc(.7cqw*var(--k)) rgba(50,25,8,.35);
+  opacity:0;transform:translate(-50%,calc(1cqw*var(--k))) rotate(-3deg) scale(.85);transition:opacity .25s,transform .45s var(--spring)}
+.label::before{content:"";position:absolute;left:50%;top:calc(-.7cqw*var(--k));width:calc(3.6cqw*var(--k));height:calc(1.2cqw*var(--k));margin-left:calc(-1.8cqw*var(--k));background:rgba(236,214,150,.85);transform:rotate(-4deg)}
+.label small{display:none;font-size:calc(1.5cqw*var(--k));opacity:.7}
 @media (hover:none){.label small{display:block}}
 .obj:hover .label,.obj:focus-visible .label,.obj.is-selected .label{opacity:1;transform:translate(-50%,0) rotate(-3deg) scale(1)}
 
-.play{position:absolute;left:34.6%;top:82.5%;width:31%;height:11.2%;z-index:2;border-radius:.8cqw;outline:none;transition:transform .4s var(--spring)}
-.play:hover{transform:translateY(-.5cqw) rotate(-.6deg)}
-.play:focus-visible{box-shadow:0 0 0 .3cqw var(--paper),0 0 0 .5cqw var(--ink)}
+.play{position:absolute;left:34.6%;top:82.5%;width:31%;height:11.2%;z-index:2;border-radius:calc(.8cqw*var(--k));outline:none;transition:transform .4s var(--spring)}
+.play:hover{transform:translateY(calc(-.5cqw*var(--k))) rotate(-.6deg)}
+.play:focus-visible{box-shadow:0 0 0 calc(.3cqw*var(--k)) var(--paper),0 0 0 calc(.5cqw*var(--k)) var(--ink)}
 
 .obj.launching{z-index:30}
 .obj.launching .lift{transform:translateY(-10%) scale(1.45) rotate(var(--rot));transition:transform .5s var(--ease)}
@@ -89,7 +90,7 @@ main{width:100%}
 .obj.nudge .lift{animation:hop .95s var(--spring)}
 @keyframes hop{0%,100%{transform:none}30%{transform:translateY(-10%) scale(1.08) rotate(var(--rot))}55%{transform:none}72%{transform:translateY(-3%)}}
 
-.spark{position:absolute;font-style:normal;font-size:2cqw;line-height:1;color:#ffe7a0;text-shadow:0 0 .6cqw rgba(255,190,70,.95);opacity:0;pointer-events:none;z-index:2}
+.spark{position:absolute;font-style:normal;font-size:calc(2cqw*var(--k));line-height:1;color:#ffe7a0;text-shadow:0 0 calc(.6cqw*var(--k)) rgba(255,190,70,.95);opacity:0;pointer-events:none;z-index:2}
 .s1{left:-7%;top:-3%}.s2{right:-9%;top:8%}.s3{left:0;bottom:4%}.s4{right:-5%;bottom:-3%}
 .obj:hover .spark,.obj:focus-visible .spark,.obj.is-selected .spark{animation:pop .6s var(--spring) both,twinkle 1.3s ease-in-out .7s infinite}
 .obj:hover .s2,.obj:focus-visible .s2,.obj.is-selected .s2{animation-delay:.08s,.8s}
@@ -100,36 +101,115 @@ main{width:100%}
 
 .note,.slip,.hint{animation:slipin .8s var(--spring) backwards}
 .note{animation-delay:.1s}.slip{animation-delay:.9s}.hint{animation-delay:1.3s}
-@keyframes slipin{from{opacity:0;transform:translateY(-6cqw) rotate(-14deg) scale(.8)}}
+@keyframes slipin{from{opacity:0;transform:translateY(calc(-6cqw*var(--k))) rotate(-14deg) scale(.8)}}
 .head .w{display:inline-block;animation:rise .7s var(--spring) backwards;animation-delay:calc(var(--i)*.1s + .5s)}
-@keyframes rise{from{opacity:0;transform:translateY(1.4cqw) rotate(7deg)}}
+@keyframes rise{from{opacity:0;transform:translateY(calc(1.4cqw*var(--k))) rotate(7deg)}}
 .head .w:hover{animation:jig .45s;animation-delay:0s}
-@keyframes jig{50%{transform:translateY(-.4cqw) rotate(-6deg) scale(1.12)}}
+@keyframes jig{50%{transform:translateY(calc(-.4cqw*var(--k))) rotate(-6deg) scale(1.12)}}
 
-.slip{position:absolute;left:5.8%;top:77.5%;width:24%;margin:0;padding:1cqw 1.3cqw .9cqw;background:var(--paper);transform:rotate(1.4deg);box-shadow:.1cqw .3cqw .7cqw rgba(60,35,15,.3);z-index:1;clip-path:polygon(0 2%,100% 0,98% 100%,2% 98%)}
-.slip::before,.slip::after{content:"✦";position:absolute;color:#d9a21b;font-size:1.5cqw;animation:twinkle 2.2s ease-in-out infinite}
-.slip::before{right:.8cqw;top:.4cqw}.slip::after{right:2.8cqw;bottom:.3cqw;font-size:1cqw;animation-delay:.9s}
-.wave{display:block;font:700 2.3cqw/1 var(--hand);white-space:nowrap}
+.slip{position:absolute;left:5.8%;top:77.5%;width:24%;margin:0;padding:calc(1cqw*var(--k)) calc(1.3cqw*var(--k)) calc(.9cqw*var(--k));background:var(--paper);transform:rotate(1.4deg);box-shadow:calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) calc(.7cqw*var(--k)) rgba(60,35,15,.3);z-index:1;clip-path:polygon(0 2%,100% 0,98% 100%,2% 98%)}
+.slip::before,.slip::after{content:"✦";position:absolute;color:#d9a21b;font-size:calc(1.5cqw*var(--k));animation:twinkle 2.2s ease-in-out infinite}
+.slip::before{right:calc(.8cqw*var(--k));top:calc(.4cqw*var(--k))}.slip::after{right:calc(2.8cqw*var(--k));bottom:calc(.3cqw*var(--k));font-size:calc(1cqw*var(--k));animation-delay:.9s}
+.wave{display:block;font:700 calc(2.3cqw*var(--k))/1 var(--hand);white-space:nowrap}
 .wave .l{display:inline-block;animation:bob 2s ease-in-out infinite;animation-delay:calc(var(--i)*.08s + 1.6s)}
-.wave .l.sp{width:.6cqw}
+.wave .l.sp{width:calc(.6cqw*var(--k))}
 .wave .l:nth-child(4n+1){color:#b8392b}.wave .l:nth-child(4n+2){color:#2f6aa8}.wave .l:nth-child(4n+3){color:#c58e0c}.wave .l:nth-child(4n){color:#2c7a73}
-@keyframes bob{0%,55%,100%{transform:none}28%{transform:translateY(-.55cqw) rotate(-5deg)}}
-.slip .sub{display:block;margin-top:.35cqw;font:600 1.45cqw/1 var(--hand);opacity:.8}
-.hint{position:absolute;left:79.5%;top:70%;width:15%;margin:0;font:700 2.1cqw/1.05 var(--hand);color:#fbf1d8;text-shadow:.1cqw .15cqw .3cqw rgba(50,25,8,.7);transform:rotate(-2deg);z-index:1;pointer-events:none}
-.hint svg{display:block;width:4.5cqw;height:6cqw;margin:0 0 .3cqw 1cqw;fill:none;stroke:#fbf1d8;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(.1cqw .15cqw .2cqw rgba(50,25,8,.6))}
+@keyframes bob{0%,55%,100%{transform:none}28%{transform:translateY(calc(-.55cqw*var(--k))) rotate(-5deg)}}
+.slip .sub{display:block;margin-top:calc(.35cqw*var(--k));font:600 calc(1.45cqw*var(--k))/1 var(--hand);opacity:.8}
+.hint{position:absolute;left:79.5%;top:70%;width:15%;margin:0;font:700 calc(2.1cqw*var(--k))/1.05 var(--hand);color:#fbf1d8;text-shadow:calc(.1cqw*var(--k)) calc(.15cqw*var(--k)) calc(.3cqw*var(--k)) rgba(50,25,8,.7);transform:rotate(-2deg);z-index:1;pointer-events:none}
+.hint svg{display:block;width:calc(4.5cqw*var(--k));height:calc(6cqw*var(--k));margin:0 0 calc(.3cqw*var(--k)) calc(1cqw*var(--k));fill:none;stroke:#fbf1d8;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(calc(.1cqw*var(--k)) calc(.15cqw*var(--k)) calc(.2cqw*var(--k)) rgba(50,25,8,.6))}
 .hint path{stroke-dasharray:100;animation:draw 3.2s ease-in-out 2s infinite}
 @keyframes draw{0%{stroke-dashoffset:100}40%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.hint path{stroke-dashoffset:0}}
 
 /* ---------- music toggle (sits over the painted music icon) ---------- */
-.music{position:absolute;left:83.2%;top:28.6%;width:7.4%;height:10.4%;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:3;transition:transform .4s var(--spring);-webkit-tap-highlight-color:transparent}
-.music:hover{transform:scale(1.1) rotate(-6deg)}
-.music:focus-visible{outline:none;box-shadow:0 0 0 .3cqw var(--paper),0 0 0 .5cqw var(--ink)}
-.slash{position:absolute;left:10%;right:10%;top:46%;height:.55cqw;border-radius:1cqw;background:#b8392b;box-shadow:0 .1cqw .3cqw rgba(0,0,0,.4);transform:rotate(-38deg) scaleX(0);transition:transform .35s var(--spring)}
+.music,.gear{position:absolute;left:83.2%;top:28.6%;width:7.4%;height:10.4%;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:3;transition:transform .4s var(--spring);-webkit-tap-highlight-color:transparent}
+.music:hover,.gear:hover{transform:scale(1.1) rotate(-6deg)}
+.music:focus-visible,.gear:focus-visible{outline:none;box-shadow:0 0 0 calc(.3cqw*var(--k)) var(--paper),0 0 0 calc(.5cqw*var(--k)) var(--ink)}
+.slash{position:absolute;left:10%;right:10%;top:46%;height:calc(.55cqw*var(--k));border-radius:calc(1cqw*var(--k));background:#b8392b;box-shadow:0 calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) rgba(0,0,0,.4);transform:rotate(-38deg) scaleX(0);transition:transform .35s var(--spring)}
 .music[aria-pressed="false"] .slash{transform:rotate(-38deg) scaleX(1)}
-.mn{position:absolute;left:30%;top:20%;font:700 2.6cqw/1 var(--hand);font-style:normal;color:#fbf1d8;text-shadow:0 .1cqw .4cqw rgba(50,25,8,.85);opacity:0;pointer-events:none}
+.mn{position:absolute;left:30%;top:20%;font:700 calc(2.6cqw*var(--k))/1 var(--hand);font-style:normal;color:#fbf1d8;text-shadow:0 calc(.1cqw*var(--k)) calc(.4cqw*var(--k)) rgba(50,25,8,.85);opacity:0;pointer-events:none}
 .music[aria-pressed="true"] .mn{animation:floatnote 3s ease-out infinite}
 @keyframes floatnote{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(-20deg)}}
+
+/* ---------- tool objects, icons, decor ---------- */
+button.obj{background:none;border:0;font:inherit;text-align:inherit}
+.music{left:83.5%;top:27.7%;width:7.1%;height:12.6%}
+.gear{left:83.35%;top:13.3%;width:7.3%;height:11.9%}
+.ico .art,.play .art,.deco{display:none}
+.ico .art{width:100%;height:100%;object-fit:contain;pointer-events:none;transition:transform .7s var(--spring)}
+.gear:hover .art,.gear:focus-visible .art{transform:rotate(90deg)}
+.stage.calm *,.stage.calm::after{animation:none!important}
+.stage.calm .spark{display:none}
+body.noscroll{overflow:hidden}
+
+/* ---------- portrait phones: a taller desk rebuilt from the same artwork ---------- */
+@media (max-aspect-ratio:4/5){
+  :root{--k:2.6}
+  body{align-items:flex-start}
+  .stage{width:min(100%,640px);min-width:0;aspect-ratio:100/236;background:url(wood.jpg) 0 0/100% auto repeat;box-shadow:inset 0 0 9vw rgba(70,35,10,.45)}
+  .obj,.ico,.play,.deco{left:var(--px);top:var(--py);width:var(--pw);height:var(--ph)}
+  .ico .art,.play .art,.deco{display:block}
+  .play .art{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 .8cqw 1.2cqw rgba(50,25,8,.4))}
+  .deco{position:absolute;pointer-events:none;z-index:1;object-fit:contain;filter:drop-shadow(0 1cqw 1.4cqw rgba(50,25,8,.38))}
+  .ico .art{filter:drop-shadow(0 .8cqw 1.1cqw rgba(50,25,8,.4))}
+  .note{left:5%;top:10.6%;width:60%;padding:3.4cqw 3.8cqw 3.6cqw}
+  .note .tag{font-size:3.3cqw}.note .head{font-size:5.7cqw;margin-top:1cqw}
+  .slip{left:17%;top:78.8%;width:43%;padding:2.4cqw 3cqw 2.2cqw}
+  .wave{font-size:4.5cqw}.slip .sub{font-size:3.6cqw;margin-top:.8cqw}
+  .slip::before{font-size:4cqw;right:2cqw;top:1cqw}.slip::after{font-size:3cqw;right:7cqw;bottom:1cqw}
+  .hint{left:66%;top:19%;width:31%;font-size:4.7cqw}
+  .hint svg{display:none}
+  .label{left:calc(50% + var(--ls,0%));font-size:4.8cqw;padding:1.3cqw 3.2cqw 1.5cqw}.label small{font-size:3.7cqw}
+  .spark{font-size:5cqw}
+}
+
+/* ---------- paper sheets (settings + doodle pad) ---------- */
+.ov{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));background:rgba(38,22,10,.66);opacity:0;transition:opacity .25s;overscroll-behavior:contain}
+.ov.open{opacity:1}.ov[hidden],.sheet[hidden]{display:none}
+.sheet{position:relative;width:min(100%,560px);color:var(--ink);font-family:var(--hand);background:linear-gradient(transparent 31px,rgba(90,130,190,.22) 32px) 0 6px/100% 32px,var(--paper);border-radius:6px 14px 8px 16px;box-shadow:0 18px 44px rgba(30,15,5,.55),inset 0 0 22px rgba(150,100,40,.18);opacity:0;transform:translateY(28px) rotate(-1.2deg) scale(.95);transition:transform .5s var(--spring),opacity .25s}
+.sheet.open{opacity:1;transform:none}
+.sheet.pad{width:min(100%,700px)}
+.sheet::before{content:"";position:absolute;left:50%;top:-14px;width:112px;height:30px;margin-left:-56px;background:rgba(236,214,150,.88);transform:rotate(-2deg);box-shadow:0 1px 3px rgba(0,0,0,.25);z-index:2}
+.sheet-in{max-height:calc(100vh - 44px);max-height:calc(100svh - 44px);overflow:auto;padding:30px 22px 22px 40px;position:relative}
+.sheet-in::before{content:"";position:absolute;left:28px;top:0;bottom:0;width:2px;background:rgba(200,70,50,.28);pointer-events:none}
+.sheet h2{margin:0;font-size:42px;line-height:1;font-weight:700;transform:rotate(-1deg)}
+.sheet .sub{margin:4px 0 0;font-size:22px;font-weight:600;opacity:.75}
+.chip{font:700 22px/1 var(--hand);color:var(--ink);padding:10px 16px;min-height:46px;min-width:46px;background:#fff7e0;border:2.5px solid var(--ink);border-radius:255px 14px 225px 14px/14px 225px 14px 255px;cursor:pointer;box-shadow:2px 3px 0 rgba(43,33,24,.85);transition:transform .2s var(--spring),box-shadow .2s,background .2s;-webkit-tap-highlight-color:transparent}
+.chip:hover{transform:translateY(-1px) rotate(-1deg)}
+.chip:active,.chip[aria-checked=true]{background:#ffd45a;transform:translate(2px,3px);box-shadow:none}
+.chip:disabled{opacity:.4;pointer-events:none}
+.chip:focus-visible,.tg:focus-visible,.sw:focus-visible,#s-vol:focus-visible,.nm:focus-visible,#dd-cv:focus-visible{outline:3px dashed #c8472b;outline-offset:3px}
+.rows{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:16px}
+.rows li{display:flex;align-items:center;justify-content:space-between;gap:14px;font-size:27px;font-weight:700}
+.rows small{display:block;font-size:18px;opacity:.7;font-weight:600;line-height:1.1}
+.tg{position:relative;flex:none;width:78px;height:42px;border:2.5px solid var(--ink);border-radius:22px 18px 22px 18px;background:#e9dcc0;cursor:pointer;padding:0;transition:background .25s}
+.tg i{position:absolute;left:3px;top:3px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle,#c8472b 0 52%,#8e2a18 53% 60%,transparent 61%),repeating-conic-gradient(#e7e2d6 0 12deg,#a9a396 12deg 24deg);box-shadow:0 2px 3px rgba(0,0,0,.4);transition:transform .35s var(--spring)}
+.tg[aria-checked=true]{background:#ffd45a}.tg[aria-checked=true] i{transform:translateX(36px) rotate(180deg)}
+#s-vol{width:min(210px,52vw);accent-color:#c8472b;height:34px}
+.close{margin-top:20px}
+.padwrap{position:relative;margin-top:12px;aspect-ratio:1500/1050;border:3px solid var(--ink);border-radius:6px 12px 8px 14px;background:#fffaf0 linear-gradient(rgba(70,110,180,.28) 1px,transparent 1px) 0 0/100% 7.1429%;box-shadow:inset 0 0 14px rgba(120,80,30,.25);transition:transform .15s}
+.padwrap::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(70,110,180,.28) 1px,transparent 1px) 0 0/5% 100%;pointer-events:none}
+.padwrap.thunk{transform:scale(.987) rotate(.2deg)}
+#dd-cv{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.empty{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:0 10%;font:700 clamp(22px,6vw,38px)/1.1 var(--hand);color:rgba(43,33,24,.38);pointer-events:none}
+.empty[hidden]{display:none}
+.tools{display:grid;gap:12px;margin-top:14px}.tools[hidden],.grp[hidden]{display:none}
+.grp{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.sw{width:46px;height:46px;border-radius:50%;border:3px solid var(--ink);background:var(--c);cursor:pointer;padding:0;transition:transform .25s var(--spring)}
+.sw[aria-checked=true]{outline:3px solid var(--ink);outline-offset:3px;transform:scale(1.1)}
+.stp{font-size:24px;padding:8px 12px}
+.nm{font:700 24px var(--hand);padding:8px 12px;min-height:46px;border:2.5px solid var(--ink);border-radius:14px 6px 14px 6px;background:#fff7e0;width:min(100%,230px);color:var(--ink)}
+.lbl{font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px}
+@media (max-width:480px){.sheet-in{padding:28px 14px 18px 32px}.sheet-in::before{left:22px}.sheet h2{font-size:36px}.rows li{font-size:24px}}
+@media (min-width:860px) and (min-height:540px){
+  .sheet.pad{width:min(100%,1020px)}
+  .sheet.pad .sheet-in{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);column-gap:22px;align-items:start}
+  .sheet.pad h2,.sheet.pad .sub{grid-column:1/-1}
+  .sheet.pad .tools{margin-top:12px}
+}
+.x{position:absolute;right:10px;top:10px;z-index:3;padding:6px 12px;min-height:44px;font-size:24px}
+@media (prefers-reduced-motion:reduce){.sheet,.ov,.tg i,.chip,.padwrap{transition:none!important}}
 </style>
 </head>
 <body>
@@ -137,6 +217,10 @@ main{width:100%}
   <h1 class="sr">Recess Games: Childhood Games We Played Between Classes</h1>
   <div class="scroller">
     <div class="stage" id="stage">
+      <img class="deco d-title" src="banner-title.png" width="871" height="206" alt="" style="--px:5%;--py:0.85%;--pw:90%;--ph:9.02%">
+      <img class="deco d-shav" src="shavings.png" width="182" height="201" alt="" style="--px:3%;--py:77.97%;--pw:12%;--ph:5.62%">
+      <img class="deco d-ruler" src="ruler.png" width="278" height="58" alt="" style="--px:60%;--py:77.97%;--pw:36%;--ph:3.18%">
+      <img class="deco d-pen" src="pen.png" width="245" height="44" alt="" style="--px:60%;--py:82.20%;--pw:34%;--ph:2.59%">
       <section class="note" aria-label="Welcome">
         <p class="tag">Childhood Games We Played Between Classes</p>
         <p class="head">The Little Games That Made Big Memories.</p>
@@ -146,28 +230,95 @@ main{width:100%}
 
       <nav aria-label="Games" style="display:contents">
         <!-- Game pages are resolved at load from the ROUTES list in the script below. -->
-        <a class="obj" data-id="fortune" href="Paper%20Fortune%20Teller.html" data-gif="fortune_teller_four_fold_transparent_final.gif" style="--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
+        <a class="obj" data-id="fortune" href="Paper%20Fortune%20Teller.html" data-gif="fortune_teller_four_fold_transparent_final.gif" style="--px:3%;--py:24.58%;--pw:46%;--ph:18.93%;--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
           <span class="shadow"></span><span class="lift"><img src="fortune.png" width="350" height="340" alt=""></span><span class="label">Paper Fortune Teller<small>Open →</small></span></a>
-        <a class="obj" data-id="sticks" href="pickup-sticks.html" style="--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
+        <a class="obj" data-id="sticks" href="pickup-sticks.html" style="--px:50%;--py:25.42%;--pw:47%;--ph:16.63%;--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
           <span class="shadow"></span><span class="lift"><img src="sticks.png" width="315" height="263" alt=""></span><span class="label">Pick-Up Sticks<small>Open →</small></span></a>
-        <a class="obj" data-id="erasers" href="games/eraser-battle.html" data-gif="eraser_battle_flip_transparent.gif" style="--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
+        <a class="obj" data-id="erasers" href="games/eraser-battle.html" data-gif="eraser_battle_flip_transparent.gif" style="--px:8%;--py:45.76%;--pw:30%;--ph:9.21%;--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
           <span class="shadow"></span><span class="lift"><img src="erasers.png" width="178" height="129" alt=""></span><span class="label">Eraser Battle<small>Open →</small></span></a>
-        <a class="obj" data-id="notebook" href="Square%20Grid.html" style="--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
+        <a class="obj" data-id="notebook" href="Square%20Grid.html" style="--px:42%;--py:44.07%;--pw:54%;--ph:18.91%;--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
           <span class="shadow"></span><span class="lift"><img src="notebook.png" width="334" height="276" alt=""></span><span class="label">Square Grid<small>Open →</small></span></a>
-        <a class="obj" data-id="caps" href="games/bottle-cap-game.html" style="--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
+        <a class="obj" data-id="caps" href="games/Bottlecaps.html" style="--ls:30%;--px:5%;--py:57.63%;--pw:34%;--ph:19.41%;--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
           <span class="shadow"></span><span class="lift"><img src="caps.png" width="213" height="287" alt=""></span><span class="label">Bottle Cap Game<small>Open →</small></span></a>
+        <button class="obj tool" type="button" data-action="doodle" aria-haspopup="dialog" aria-label="Open the doodle pad: stamp it, doodle it, leave your mark" style="--n:5;--idle:breathe;--dur:4.4s;--x:17.33%;--y:64.58%;--w:16.21%;--h:12.5%;--rot:-3deg;--px:42%;--py:66.10%;--pw:54%;--ph:9.92%">
+          <span class="shadow"></span><span class="lift"><img src="pencilcase.png" width="332" height="144" alt=""></span><span class="label">Leave Your Mark<small>Open →</small></span></button>
       </nav>
 
-      <button class="music" id="music" type="button" aria-pressed="true" aria-label="Background music: on. Press to turn off">
-        <span class="slash"></span><i class="mn" style="--dx:-6cqw;--dy:-3cqw" aria-hidden="true">♪</i><i class="mn" style="--dx:-9cqw;--dy:1cqw;animation-delay:1s" aria-hidden="true">♫</i><i class="mn" style="--dx:-4cqw;--dy:-6cqw;animation-delay:2s" aria-hidden="true">♪</i>
+      <button class="ico gear" id="gear" type="button" aria-haspopup="dialog" aria-label="Open desk settings" style="--px:67%;--py:11.44%;--pw:14.5%;--ph:5.65%"><img class="art" src="icon-gear.png" width="149" height="137" alt=""></button>
+      <button class="ico music" id="music" style="--px:83%;--py:11.44%;--pw:14.5%;--ph:6.10%" type="button" aria-pressed="true" aria-label="Background music: on. Press to turn off">
+        <img class="art" src="icon-music.png" width="146" height="145" alt=""><span class="slash"></span><i class="mn" style="--dx:-6cqw;--dy:-3cqw" aria-hidden="true">♪</i><i class="mn" style="--dx:-9cqw;--dy:1cqw;animation-delay:1s" aria-hidden="true">♫</i><i class="mn" style="--dx:-4cqw;--dy:-6cqw;animation-delay:2s" aria-hidden="true">♪</i>
       </button>
       <audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
       <!-- Sits over the painted "PLAY NOW" strip; opens a random game. -->
-      <a class="play" id="play" href="Paper%20Fortune%20Teller.html" aria-label="Play now: open a random game"></a>
+      <a class="play" id="play" href="Paper%20Fortune%20Teller.html" aria-label="Play now: open a random game" style="--px:10%;--py:88.14%;--pw:80%;--ph:7.13%"><img class="art" src="banner-play.png" width="647" height="136" alt=""></a>
     </div>
   </div>
 </main>
+<div class="ov" id="ov" hidden>
+  <section class="sheet" id="settings" role="dialog" aria-modal="true" aria-labelledby="st-h" hidden>
+    <button class="chip x" type="button" data-close aria-label="Close">✕</button>
+    <div class="sheet-in">
+      <h2 id="st-h">Desk Settings</h2>
+      <p class="sub">Tidy the desk your way.</p>
+      <ul class="rows">
+        <li><label for="s-music">Music</label><button class="tg" id="s-music" type="button" role="switch" aria-checked="true" data-first><i></i></button></li>
+        <li><label for="s-vol">Volume</label><input id="s-vol" type="range" min="0" max="100" value="50"></li>
+        <li><label for="s-live">Lively desk<small>sparkles, hops and wiggles</small></label><button class="tg" id="s-live" type="button" role="switch" aria-checked="true"><i></i></button></li>
+        <li><span>My doodles<small>from the pencil case</small></span><button class="chip" id="s-clear" type="button">Clear</button></li>
+        <li><span>Everything else</span><button class="chip" id="s-reset" type="button">Reset</button></li>
+      </ul>
+      <button class="chip close" type="button" data-close>Back to the desk</button>
+    </div>
+  </section>
+  <section class="sheet pad" id="doodle" role="dialog" aria-modal="true" aria-labelledby="dd-h" hidden>
+    <button class="chip x" type="button" data-close aria-label="Close">✕</button>
+    <div class="sheet-in">
+      <h2 id="dd-h">Leave Your Mark</h2>
+      <p class="sub">Stamp it. Doodle it. Prove you were here.</p>
+      <div class="padwrap" id="dd-wrap">
+        <canvas id="dd-cv" width="1500" height="1050" aria-label="Doodle area. Tap to stamp or draw with your finger."></canvas>
+        <p class="empty" id="dd-empty">Tap to stamp, or scribble here ✎</p>
+      </div>
+      <div class="tools">
+        <div class="grp" role="radiogroup" aria-label="Tool" id="g-tool">
+          <button class="chip" type="button" role="radio" aria-checked="true" data-v="stamp" data-first>Stamp</button>
+          <button class="chip" type="button" role="radio" aria-checked="false" data-v="pen">Pen</button>
+          <button class="chip" type="button" role="radio" aria-checked="false" data-v="eraser">Eraser</button>
+        </div>
+        <div class="grp" role="radiogroup" aria-label="Stamps" id="g-stamp">
+          <button class="chip stp" type="button" role="radio" aria-checked="true" data-v="here" aria-label="I was here box stamp">I WAS HERE</button>
+          <button class="chip stp" type="button" role="radio" aria-checked="false" data-v="seal" aria-label="Round Recess seal">◎</button>
+          <button class="chip stp" type="button" role="radio" aria-checked="false" data-v="star" aria-label="Star">★</button>
+          <button class="chip stp" type="button" role="radio" aria-checked="false" data-v="heart" aria-label="Heart">♥</button>
+          <button class="chip stp" type="button" role="radio" aria-checked="false" data-v="smile" aria-label="Smiley">☺</button>
+          <button class="chip stp" type="button" role="radio" aria-checked="false" data-v="cap" aria-label="Bottle cap">✺</button>
+        </div>
+        <div class="grp" role="radiogroup" aria-label="Ink colour" id="g-color">
+          <button class="sw" type="button" role="radio" aria-checked="false" data-v="#2b2118" style="--c:#2b2118" aria-label="Black ink"></button>
+          <button class="sw" type="button" role="radio" aria-checked="true" data-v="#b8392b" style="--c:#b8392b" aria-label="Red ink"></button>
+          <button class="sw" type="button" role="radio" aria-checked="false" data-v="#2f6aa8" style="--c:#2f6aa8" aria-label="Blue ink"></button>
+          <button class="sw" type="button" role="radio" aria-checked="false" data-v="#c58e0c" style="--c:#c58e0c" aria-label="Gold ink"></button>
+          <button class="sw" type="button" role="radio" aria-checked="false" data-v="#2c7a73" style="--c:#2c7a73" aria-label="Teal ink"></button>
+        </div>
+        <div class="grp" role="radiogroup" aria-label="Size" id="g-size">
+          <button class="chip" type="button" role="radio" aria-checked="false" data-v="0">Small</button>
+          <button class="chip" type="button" role="radio" aria-checked="true" data-v="1">Medium</button>
+          <button class="chip" type="button" role="radio" aria-checked="false" data-v="2">Big</button>
+        </div>
+        <div class="grp"><label class="lbl" for="dd-name">Name <input class="nm" id="dd-name" maxlength="14" placeholder="optional" autocomplete="off"></label></div>
+        <div class="grp">
+          <button class="chip" type="button" id="dd-undo">Undo</button>
+          <button class="chip" type="button" id="dd-clear">Clear</button>
+          <button class="chip" type="button" id="dd-key">Stamp it</button>
+          <button class="chip" type="button" id="dd-save">Save picture</button>
+          <button class="chip" type="button" data-close>Done</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
 <script>
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -182,11 +333,14 @@ main{width:100%}
     sticks:   ['pickup-sticks.html', 'games/pickup-sticks.html', 'games/pick-up-sticks.html'],
     erasers:  ['games/eraser-battle.html', 'games/Eraser Battle.html', 'Eraser Battle.html', 'eraser-battle.html', 'games/eraser-battle/index.html'],
     notebook: ['Square Grid.html', 'games/Square Grid.html', 'games/square-grid.html'],
-    caps:     ['games/bottle-cap-game.html', 'games/Bottle Cap Game.html', 'Bottle Cap Game.html', 'bottle-cap-game.html', 'games/ceper.html', 'games/bottle-cap/index.html']
+    caps:     ['games/Bottlecaps.html', 'games/bottlecaps.html', 'Bottlecaps.html', 'games/bottle-cap-game.html', 'games/Bottle Cap Game.html', 'Bottle Cap Game.html', 'bottle-cap-game.html', 'games/ceper.html', 'games/bottle-cap/index.html']
   };
   const exists = async u => { try { return (await fetch(encodeURI(u), { method: 'HEAD' })).ok; } catch (e) { return false; } };
   const objs = [...stage.querySelectorAll('.obj')];
-  let busy = false, selected = null;
+  let busy = false, selected = null, openId = null, opener = null;
+  const $ = id => document.getElementById(id);
+  let lively = sget('rg-live') === 'on' || (sget('rg-live') === null && !reduce);
+  stage.classList.toggle('calm', !lively);
 
   objs.forEach(o => {
     o._ready = (async () => {
@@ -196,7 +350,8 @@ main{width:100%}
   });
 
   // Background music: browsers block sound until the first tap/key press, so it starts then.
-  const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music'), TARGET = 0.35;
+  const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music');
+  let TARGET = (isNaN(parseInt(sget('rg-vol'))) ? 50 : parseInt(sget('rg-vol'))) / 100 * 0.7;
   let want = sget('rg-music') !== 'off', fade;
   bgm.volume = 0;
   function ramp(to, ms, done) {
@@ -211,9 +366,10 @@ main{width:100%}
   };
   const stopMusic = () => ramp(0, 500, () => bgm.pause());
   label(); startMusic();
-  const unlock = e => { if (e.target.closest && e.target.closest('#music')) return; startMusic(); };
+  const unlock = e => { if (e.target.closest && e.target.closest('#music,#s-music,#gear,.ov')) return; startMusic(); };
   ['pointerdown', 'keydown', 'touchend'].forEach(ev => addEventListener(ev, unlock, { passive: true }));
-  mbtn.addEventListener('click', () => { want = !want; sset('rg-music', want ? 'on' : 'off'); label(); want ? startMusic() : stopMusic(); });
+  const setMusic = on => { want = on; sset('rg-music', on ? 'on' : 'off'); label(); on ? startMusic() : stopMusic(); syncSettings(); };
+  mbtn.addEventListener('click', () => setMusic(!want));
   document.addEventListener('visibilitychange', () => { if (document.hidden) bgm.pause(); else startMusic(); });
   addEventListener('pagehide', () => sset('rg-music-t', bgm.currentTime || 0));
 
@@ -245,6 +401,7 @@ main{width:100%}
         if (selected) { selected.classList.remove('is-selected'); rest(selected); }
         selected = o; o.classList.add('is-selected'); play(o); return;
       }
+      if (o.dataset.action === 'doodle') { o.classList.remove('is-selected'); rest(o); selected = null; openSheet('doodle', o); return; }
       busy = true; o.classList.add('launching'); stage.classList.add('leaving'); play(o);
       if (!bgm.paused) ramp(0, 600);
       const wait = new Promise(r => setTimeout(r, reduce ? 0 : 650)), cap = new Promise(r => setTimeout(r, 1800));
@@ -258,7 +415,7 @@ main{width:100%}
 
   document.getElementById('play').addEventListener('click', e => {
     e.preventDefault(); if (busy) return; busy = true;
-    const o = objs[Math.floor(Math.random() * objs.length)];
+    const games = objs.filter(x => !x.dataset.action), o = games[Math.floor(Math.random() * games.length)];
     if (!bgm.paused) ramp(0, 500);
     Promise.race([o._ready, new Promise(r => setTimeout(r, 1800))]).then(() => { location.href = o.href; });
   });
@@ -275,13 +432,127 @@ main{width:100%}
   split(stage.querySelector('.head'), true); split(stage.querySelector('.wave'), false);
   objs.forEach(o => o.insertAdjacentHTML('beforeend', '<i class="spark s1" aria-hidden="true">✦</i><i class="spark s2" aria-hidden="true">✦</i><i class="spark s3" aria-hidden="true">✧</i><i class="spark s4" aria-hidden="true">✦</i>'));
   // Every few seconds a random idle object hops, as if asking to be picked.
-  if (!reduce) setInterval(() => {
-    if (busy || document.hidden) return;
+  setInterval(() => {
+    if (busy || document.hidden || !lively || openId) return;
     const c = objs.filter(o => !o.matches(':hover,:focus-visible,.is-selected')), o = c[Math.floor(Math.random() * c.length)];
     if (o) { o.classList.add('nudge'); setTimeout(() => o.classList.remove('nudge'), 1000); }
   }, 2600);
-  // Start the narrow-screen pan centred on the objects.
-  const sc = document.querySelector('.scroller'); sc.scrollLeft = (sc.scrollWidth - sc.clientWidth) * 0.5;
+
+  // ---------- sheets: settings + doodle pad ----------
+  const ov = $('ov'), sheets = { settings: $('settings'), doodle: $('doodle') };
+  function openSheet(id, from) {
+    if (openId) return; openId = id; opener = from; ov.hidden = false; sheets[id].hidden = false; document.body.classList.add('noscroll');
+    if (id === 'settings') syncSettings(); else pad.show();
+    requestAnimationFrame(() => { ov.classList.add('open'); sheets[id].classList.add('open'); const f = sheets[id].querySelector('[data-first]'); if (f) f.focus({ preventScroll: true }); });
+  }
+  function closeSheet() {
+    if (!openId) return; const id = openId; openId = null; ov.classList.remove('open'); sheets[id].classList.remove('open');
+    setTimeout(() => { ov.hidden = true; sheets[id].hidden = true; document.body.classList.remove('noscroll'); if (opener) opener.focus({ preventScroll: true }); }, reduce ? 0 : 260);
+  }
+  ov.addEventListener('pointerdown', e => { if (e.target === ov) closeSheet(); });
+  ov.addEventListener('click', e => { if (e.target.closest('[data-close]')) closeSheet(); });
+  addEventListener('keydown', e => {
+    if (!openId) return;
+    if (e.key === 'Escape') { closeSheet(); return; }
+    if (e.key !== 'Tab') return;
+    const f = [...sheets[openId].querySelectorAll('button:not(:disabled),input')].filter(x => x.offsetParent !== null);
+    if (!f.length) return; const a = f[0], z = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
+  });
+  $('gear').addEventListener('click', e => openSheet('settings', e.currentTarget));
+
+  // settings
+  const sMusic = $('s-music'), sVol = $('s-vol'), sLive = $('s-live'), sClear = $('s-clear');
+  function syncSettings() { sMusic.setAttribute('aria-checked', want); sLive.setAttribute('aria-checked', lively); sVol.value = Math.round(TARGET / 0.7 * 100); }
+  const setLively = on => { lively = on; sset('rg-live', on ? 'on' : 'off'); stage.classList.toggle('calm', !on); syncSettings(); };
+  sMusic.addEventListener('click', () => setMusic(!want));
+  sLive.addEventListener('click', () => setLively(!lively));
+  sVol.addEventListener('input', () => { TARGET = sVol.value / 100 * 0.7; sset('rg-vol', sVol.value); if (!bgm.paused) { clearInterval(fade); bgm.volume = TARGET; } });
+  let clearT; sClear.addEventListener('click', () => {
+    if (sClear.dataset.sure) { clearTimeout(clearT); delete sClear.dataset.sure; sClear.textContent = 'Cleared ✓'; pad.clear(); setTimeout(() => sClear.textContent = 'Clear', 1500); return; }
+    sClear.dataset.sure = 1; sClear.textContent = 'Sure?'; clearT = setTimeout(() => { delete sClear.dataset.sure; sClear.textContent = 'Clear'; }, 3000);
+  });
+  $('s-reset').addEventListener('click', () => {
+    ['rg-music', 'rg-vol', 'rg-live'].forEach(k => { try { localStorage.removeItem(k); } catch (e) {} });
+    TARGET = 0.35; lively = !reduce; stage.classList.toggle('calm', !lively); setMusic(true);
+  });
+
+  // doodle pad
+  const pad = (() => {
+    const cv = $('dd-cv'), g = cv.getContext('2d'), empty = $('dd-empty'), nameIn = $('dd-name'), wrap = $('dd-wrap'), undoB = $('dd-undo');
+    let acts = []; try { acts = JSON.parse(sget('rg-doodle') || '[]'); } catch (e) { acts = []; }
+    let tool = 'stamp', stamp = 'here', color = '#b8392b', size = 1, cur = null;
+    const SZ = [.7, 1, 1.45], LW = [6, 12, 24];
+    nameIn.value = sget('rg-name') || '';
+    nameIn.addEventListener('input', () => sset('rg-name', nameIn.value));
+    const persist = () => { try { localStorage.setItem('rg-doodle', JSON.stringify(acts.slice(-300))); } catch (e) {} };
+    const rng = seed => () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+    const dateTxt = () => new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
+    const poly = (c, n, R, r0) => { c.beginPath(); for (let i = 0; i < n * 2; i++) { const rr = i % 2 ? r0 : R, a = -Math.PI / 2 + i * Math.PI / n; c[i ? 'lineTo' : 'moveTo'](Math.cos(a) * rr, Math.sin(a) * rr); } c.closePath(); };
+    const FONT = "Impact,'Arial Black','Helvetica Neue',sans-serif";
+    function drawStamp(ctx, a) {
+      const r = rng(a.seed), S = 170 * a.sz, W = S * 3.4, H = S * 2.3, t = document.createElement('canvas'); t.width = W; t.height = H;
+      const c = t.getContext('2d'); c.translate(W / 2, H / 2); c.fillStyle = c.strokeStyle = a.c; c.lineCap = c.lineJoin = 'round'; c.textAlign = 'center'; c.textBaseline = 'middle'; const lw = S * .05;
+      if (a.k === 'here') {
+        const l1 = (a.name ? a.name.toUpperCase() + ' WAS' : 'I WAS') + ' HERE'; c.font = `${S * .36}px ${FONT}`;
+        const w = Math.min(c.measureText(l1).width + S * .55, W * .95), h = S * .95;
+        c.lineWidth = lw; c.strokeRect(-w / 2, -h / 2, w, h); c.lineWidth = lw * .4; c.strokeRect(-w / 2 + lw * 1.5, -h / 2 + lw * 1.5, w - lw * 3, h - lw * 3);
+        c.fillText(l1, 0, -S * .1, w - S * .35); c.font = `${S * .18}px ${FONT}`; c.fillText(a.date, 0, S * .26);
+      } else if (a.k === 'star') { poly(c, 5, S * .95, S * .4); c.fill(); }
+      else if (a.k === 'heart') { c.beginPath(); c.moveTo(0, S * .75); c.bezierCurveTo(-S * 1.15, S * .05, -S * .62, -S * .85, 0, -S * .32); c.bezierCurveTo(S * .62, -S * .85, S * 1.15, S * .05, 0, S * .75); c.fill(); }
+      else if (a.k === 'smile') { c.lineWidth = lw * 1.2; c.beginPath(); c.arc(0, 0, S * .8, 0, 7); c.stroke(); c.beginPath(); c.arc(-S * .28, -S * .22, S * .09, 0, 7); c.arc(S * .28, -S * .22, S * .09, 0, 7); c.fill(); c.beginPath(); c.arc(0, S * .05, S * .46, .15 * Math.PI, .85 * Math.PI); c.stroke(); }
+      else if (a.k === 'cap') { poly(c, 21, S * .92, S * .78); c.fill(); c.globalCompositeOperation = 'destination-out'; c.lineWidth = S * .05; c.beginPath(); c.arc(0, 0, S * .55, 0, 7); c.stroke(); c.globalCompositeOperation = 'source-over'; }
+      else { // round seal
+        const R = S * .98; c.lineWidth = lw; c.beginPath(); c.arc(0, 0, R, 0, 7); c.stroke(); c.lineWidth = lw * .45; c.beginPath(); c.arc(0, 0, R * .62, 0, 7); c.stroke();
+        const str = 'RECESS GAMES ★ I WAS HERE ★ ', n = str.length; c.font = `${S * .17}px ${FONT}`;
+        for (let i = 0; i < n; i++) { c.save(); c.rotate(-Math.PI / 2 + i * 2 * Math.PI / n); c.translate(R * .8, 0); c.rotate(Math.PI / 2); c.fillText(str[i], 0, 0); c.restore(); }
+        poly(c, 5, S * .26, S * .11); c.fill(); c.font = `${S * .12}px ${FONT}`; c.fillText(a.date, 0, S * .4);
+      }
+      c.globalCompositeOperation = 'destination-out'; // rubber-stamp ink speckle
+      for (let i = 0; i < 80; i++) { c.globalAlpha = .25 + r() * .6; c.beginPath(); c.arc((r() - .5) * W * .75, (r() - .5) * H * .75, r() * S * .03 + 1, 0, 7); c.fill(); }
+      ctx.save(); ctx.translate(a.x, a.y); ctx.rotate(a.r); ctx.globalAlpha = .94; ctx.drawImage(t, -W / 2, -H / 2); ctx.restore();
+    }
+    function drawStroke(ctx, a) {
+      const p = a.p; ctx.save(); ctx.lineCap = ctx.lineJoin = 'round'; ctx.strokeStyle = a.c; ctx.lineWidth = a.w; ctx.globalCompositeOperation = a.e ? 'destination-out' : 'source-over';
+      ctx.beginPath(); ctx.moveTo(p[0][0], p[0][1]); if (p.length === 1) ctx.lineTo(p[0][0] + .1, p[0][1]);
+      for (let i = 1; i < p.length - 1; i++) ctx.quadraticCurveTo(p[i][0], p[i][1], (p[i][0] + p[i + 1][0]) / 2, (p[i][1] + p[i + 1][1]) / 2);
+      if (p.length > 1) ctx.lineTo(p[p.length - 1][0], p[p.length - 1][1]); ctx.stroke(); ctx.restore();
+    }
+    const liveSeg = a => { const p = a.p, n = p.length; g.save(); g.lineCap = g.lineJoin = 'round'; g.strokeStyle = a.c; g.lineWidth = a.w; g.globalCompositeOperation = a.e ? 'destination-out' : 'source-over'; g.beginPath();
+      if (n < 3) { g.moveTo(p[0][0], p[0][1]); g.lineTo(p[n - 1][0] + (n === 1 ? .1 : 0), p[n - 1][1]); }
+      else { g.moveTo((p[n - 3][0] + p[n - 2][0]) / 2, (p[n - 3][1] + p[n - 2][1]) / 2); g.quadraticCurveTo(p[n - 2][0], p[n - 2][1], (p[n - 2][0] + p[n - 1][0]) / 2, (p[n - 2][1] + p[n - 1][1]) / 2); }
+      g.stroke(); g.restore(); };
+    const upd = () => { empty.hidden = acts.length > 0 || !!cur; undoB.disabled = !acts.length; };
+    function redraw() { g.clearRect(0, 0, cv.width, cv.height); acts.forEach(a => a.t === 's' ? drawStroke(g, a) : drawStamp(g, a)); upd(); }
+    const pos = e => { const r = cv.getBoundingClientRect(); return [Math.round((e.clientX - r.left) * cv.width / r.width), Math.round((e.clientY - r.top) * cv.height / r.height)]; };
+    function addStamp(x, y) {
+      const a = { t: 'k', k: stamp, x, y, r: (Math.random() - .5) * .3, sz: SZ[size], c: color, seed: Math.random() * 1e9 | 0, name: nameIn.value.trim().slice(0, 14), date: dateTxt() };
+      acts.push(a); drawStamp(g, a); wrap.classList.add('thunk'); setTimeout(() => wrap.classList.remove('thunk'), 140); persist(); upd();
+    }
+    cv.addEventListener('pointerdown', e => {
+      e.preventDefault(); const [x, y] = pos(e);
+      if (tool === 'stamp') { addStamp(x, y); return; }
+      cv.setPointerCapture(e.pointerId); cur = { t: 's', c: color, w: LW[size] * (tool === 'eraser' ? 2.6 : 1), e: tool === 'eraser', p: [[x, y]] }; liveSeg(cur); upd();
+    });
+    cv.addEventListener('pointermove', e => { if (!cur) return; const [x, y] = pos(e), l = cur.p[cur.p.length - 1]; if (Math.hypot(x - l[0], y - l[1]) > 2) { cur.p.push([x, y]); liveSeg(cur); } });
+    const end = () => { if (!cur) return; acts.push(cur); cur = null; persist(); upd(); };
+    cv.addEventListener('pointerup', end); cv.addEventListener('pointercancel', end);
+    function group(id, cb) { const el = $(id); el.addEventListener('click', e => { const b = e.target.closest('[data-v]'); if (!b) return; el.querySelectorAll('[data-v]').forEach(x => x.setAttribute('aria-checked', x === b)); cb(b.dataset.v); }); }
+    group('g-tool', v => { tool = v; $('g-stamp').hidden = v !== 'stamp'; $('g-color').hidden = v === 'eraser'; });
+    group('g-stamp', v => stamp = v); group('g-color', v => color = v); group('g-size', v => size = +v);
+    undoB.addEventListener('click', () => { acts.pop(); redraw(); persist(); });
+    $('dd-clear').addEventListener('click', () => api.clear());
+    $('dd-key').addEventListener('click', () => addStamp(300 + Math.random() * 900, 250 + Math.random() * 550));
+    $('dd-save').addEventListener('click', () => {
+      const t = document.createElement('canvas'); t.width = cv.width; t.height = cv.height; const c = t.getContext('2d');
+      c.fillStyle = '#fffaf0'; c.fillRect(0, 0, t.width, t.height); c.strokeStyle = 'rgba(70,110,180,.28)'; c.lineWidth = 2;
+      for (let x = 0; x <= t.width; x += 75) { c.beginPath(); c.moveTo(x, 0); c.lineTo(x, t.height); c.stroke(); }
+      for (let y = 0; y <= t.height; y += 75) { c.beginPath(); c.moveTo(0, y); c.lineTo(t.width, y); c.stroke(); }
+      c.drawImage(cv, 0, 0); t.toBlob(b => { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'i-was-here-recess-games.png'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); });
+    });
+    const api = { show() { redraw(); }, clear() { acts = []; redraw(); persist(); } };
+    redraw(); return api;
+  })();
 })();
 </script>
 </body>
