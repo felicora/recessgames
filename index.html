@@ -9,8 +9,8 @@
 <link rel="canonical" href="https://recessgames.example/">
 <meta property="og:title" content="Recess Games | Nostalgic Childhood Games Online">
 <meta property="og:description" content="The Little Games That Made Big Memories.">
-<meta property="og:image" content="assets/desk.jpg">
-<link rel="preload" as="image" href="assets/desk.jpg">
+<meta property="og:image" content="desk.jpg">
+<link rel="preload" as="image" href="desk.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap">
 <style>
@@ -24,7 +24,7 @@ main{width:100%}
 /* On narrow screens the desk keeps a readable size and pans sideways instead of shrinking the objects. */
 .scroller{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .stage{position:relative;width:max(100%,980px);max-width:1900px;margin:0 auto;aspect-ratio:2048/1152;
-  container-type:inline-size;background:url(assets/desk.jpg) center/100% 100% no-repeat;isolation:isolate}
+  container-type:inline-size;background:url(desk.jpg) center/100% 100% no-repeat;isolation:isolate}
 .stage>img.bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
 
 .note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:.9cqw 1.1cqw 1cqw;background:var(--paper);
@@ -120,6 +120,16 @@ main{width:100%}
 .hint path{stroke-dasharray:100;animation:draw 3.2s ease-in-out 2s infinite}
 @keyframes draw{0%{stroke-dashoffset:100}40%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.hint path{stroke-dashoffset:0}}
+
+/* ---------- music toggle (sits over the painted music icon) ---------- */
+.music{position:absolute;left:83.2%;top:28.6%;width:7.4%;height:10.4%;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:3;transition:transform .4s var(--spring);-webkit-tap-highlight-color:transparent}
+.music:hover{transform:scale(1.1) rotate(-6deg)}
+.music:focus-visible{outline:none;box-shadow:0 0 0 .3cqw var(--paper),0 0 0 .5cqw var(--ink)}
+.slash{position:absolute;left:10%;right:10%;top:46%;height:.55cqw;border-radius:1cqw;background:#b8392b;box-shadow:0 .1cqw .3cqw rgba(0,0,0,.4);transform:rotate(-38deg) scaleX(0);transition:transform .35s var(--spring)}
+.music[aria-pressed="false"] .slash{transform:rotate(-38deg) scaleX(1)}
+.mn{position:absolute;left:30%;top:20%;font:700 2.6cqw/1 var(--hand);font-style:normal;color:#fbf1d8;text-shadow:0 .1cqw .4cqw rgba(50,25,8,.85);opacity:0;pointer-events:none}
+.music[aria-pressed="true"] .mn{animation:floatnote 3s ease-out infinite}
+@keyframes floatnote{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(-20deg)}}
 </style>
 </head>
 <body>
@@ -135,21 +145,26 @@ main{width:100%}
       <p class="hint"><svg viewBox="0 0 60 80" aria-hidden="true"><path pathLength="100" d="M50 76 C54 50 40 30 16 10 M30 8 L16 10 L20 24"/></svg>Pick Something From the Desk.</p>
 
       <nav aria-label="Games" style="display:contents">
-        <!-- Routes and GIF paths are assumptions: edit href / data-gif to match the real project. -->
-        <a class="obj" href="games/paper-fortune-teller/" data-gif="assets/gifs/fortune.gif" style="--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
-          <span class="shadow"></span><span class="lift"><img src="assets/objects/fortune.png" width="350" height="340" alt=""></span><span class="label">Paper Fortune Teller<small>Open →</small></span></a>
-        <a class="obj" href="games/pick-up-sticks/" data-gif="assets/gifs/sticks.gif" style="--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
-          <span class="shadow"></span><span class="lift"><img src="assets/objects/sticks.png" width="315" height="263" alt=""></span><span class="label">Pick-Up Sticks<small>Open →</small></span></a>
-        <a class="obj" href="games/eraser-battle/" data-gif="assets/gifs/erasers.gif" style="--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
-          <span class="shadow"></span><span class="lift"><img src="assets/objects/erasers.png" width="178" height="129" alt=""></span><span class="label">Eraser Battle<small>Open →</small></span></a>
-        <a class="obj" href="games/square-grid/" data-gif="assets/gifs/notebook.gif" style="--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
-          <span class="shadow"></span><span class="lift"><img src="assets/objects/notebook.png" width="334" height="276" alt=""></span><span class="label">Square Grid<small>Open →</small></span></a>
-        <a class="obj" href="games/bottle-cap-game/" data-gif="assets/gifs/caps.gif" style="--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
-          <span class="shadow"></span><span class="lift"><img src="assets/objects/caps.png" width="213" height="287" alt=""></span><span class="label">Bottle Cap Game<small>Open →</small></span></a>
+        <!-- Game pages are resolved at load from the ROUTES list in the script below. -->
+        <a class="obj" data-id="fortune" href="Paper%20Fortune%20Teller.html" data-gif="fortune_teller_four_fold_transparent_final.gif" style="--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
+          <span class="shadow"></span><span class="lift"><img src="fortune.png" width="350" height="340" alt=""></span><span class="label">Paper Fortune Teller<small>Open →</small></span></a>
+        <a class="obj" data-id="sticks" href="pickup-sticks.html" style="--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
+          <span class="shadow"></span><span class="lift"><img src="sticks.png" width="315" height="263" alt=""></span><span class="label">Pick-Up Sticks<small>Open →</small></span></a>
+        <a class="obj" data-id="erasers" href="games/eraser-battle.html" data-gif="eraser_battle_flip_transparent.gif" style="--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
+          <span class="shadow"></span><span class="lift"><img src="erasers.png" width="178" height="129" alt=""></span><span class="label">Eraser Battle<small>Open →</small></span></a>
+        <a class="obj" data-id="notebook" href="Square%20Grid.html" style="--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
+          <span class="shadow"></span><span class="lift"><img src="notebook.png" width="334" height="276" alt=""></span><span class="label">Square Grid<small>Open →</small></span></a>
+        <a class="obj" data-id="caps" href="games/bottle-cap-game.html" style="--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
+          <span class="shadow"></span><span class="lift"><img src="caps.png" width="213" height="287" alt=""></span><span class="label">Bottle Cap Game<small>Open →</small></span></a>
       </nav>
 
+      <button class="music" id="music" type="button" aria-pressed="true" aria-label="Background music: on. Press to turn off">
+        <span class="slash"></span><i class="mn" style="--dx:-6cqw;--dy:-3cqw" aria-hidden="true">♪</i><i class="mn" style="--dx:-9cqw;--dy:1cqw;animation-delay:1s" aria-hidden="true">♫</i><i class="mn" style="--dx:-4cqw;--dy:-6cqw;animation-delay:2s" aria-hidden="true">♪</i>
+      </button>
+      <audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
+
       <!-- Sits over the painted "PLAY NOW" strip; opens a random game. -->
-      <a class="play" id="play" href="games/paper-fortune-teller/" aria-label="Play now: open a random game"></a>
+      <a class="play" id="play" href="Paper%20Fortune%20Teller.html" aria-label="Play now: open a random game"></a>
     </div>
   </div>
 </main>
@@ -158,12 +173,54 @@ main{width:100%}
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const touch = matchMedia('(hover: none)').matches;
   const stage = document.getElementById('stage');
+  const sget = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const sset = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+
+  // Where each game lives. The first path that answers is used, so a moved file only needs fixing here.
+  const ROUTES = {
+    fortune:  ['Paper Fortune Teller.html', 'games/Paper Fortune Teller.html', 'games/paper-fortune-teller.html'],
+    sticks:   ['pickup-sticks.html', 'games/pickup-sticks.html', 'games/pick-up-sticks.html'],
+    erasers:  ['games/eraser-battle.html', 'games/Eraser Battle.html', 'Eraser Battle.html', 'eraser-battle.html', 'games/eraser-battle/index.html'],
+    notebook: ['Square Grid.html', 'games/Square Grid.html', 'games/square-grid.html'],
+    caps:     ['games/bottle-cap-game.html', 'games/Bottle Cap Game.html', 'Bottle Cap Game.html', 'bottle-cap-game.html', 'games/ceper.html', 'games/bottle-cap/index.html']
+  };
+  const exists = async u => { try { return (await fetch(encodeURI(u), { method: 'HEAD' })).ok; } catch (e) { return false; } };
   const objs = [...stage.querySelectorAll('.obj')];
   let busy = false, selected = null;
+
+  objs.forEach(o => {
+    o._ready = (async () => {
+      for (const u of ROUTES[o.dataset.id] || []) if (await exists(u)) { o.setAttribute('href', encodeURI(u)); return; }
+      console.warn('[Recess Games] No game page found for "' + o.dataset.id + '". Tried:', ROUTES[o.dataset.id]);
+    })();
+  });
+
+  // Background music: browsers block sound until the first tap/key press, so it starts then.
+  const bgm = document.getElementById('bgm'), mbtn = document.getElementById('music'), TARGET = 0.35;
+  let want = sget('rg-music') !== 'off', fade;
+  bgm.volume = 0;
+  function ramp(to, ms, done) {
+    clearInterval(fade); const from = bgm.volume, t0 = performance.now();
+    fade = setInterval(() => { const k = Math.min(1, (performance.now() - t0) / ms); bgm.volume = Math.max(0, Math.min(1, from + (to - from) * k)); if (k === 1) { clearInterval(fade); if (done) done(); } }, 40);
+  }
+  const label = () => { mbtn.setAttribute('aria-pressed', want); mbtn.setAttribute('aria-label', 'Background music: ' + (want ? 'on. Press to turn off' : 'off. Press to turn on')); };
+  const startMusic = () => {
+    if (!want || !bgm.paused) return;
+    const t = parseFloat(sget('rg-music-t')); if (t > 0 && bgm.currentTime === 0) { try { bgm.currentTime = t; } catch (e) {} }
+    bgm.play().then(() => ramp(TARGET, 1500)).catch(() => {});
+  };
+  const stopMusic = () => ramp(0, 500, () => bgm.pause());
+  label(); startMusic();
+  const unlock = e => { if (e.target.closest && e.target.closest('#music')) return; startMusic(); };
+  ['pointerdown', 'keydown', 'touchend'].forEach(ev => addEventListener(ev, unlock, { passive: true }));
+  mbtn.addEventListener('click', () => { want = !want; sset('rg-music', want ? 'on' : 'off'); label(); want ? startMusic() : stopMusic(); });
+  document.addEventListener('visibilitychange', () => { if (document.hidden) bgm.pause(); else startMusic(); });
+  addEventListener('pagehide', () => sset('rg-music-t', bgm.currentTime || 0));
 
   // Preload each object's own GIF once; mark objects whose GIF is missing so they get a CSS wiggle instead.
   const ready = new Map();
   const preload = () => objs.forEach(o => {
+    if (!o.dataset.gif) { o.classList.add('fallback'); return; }
     const im = new Image();
     im.onload = () => ready.set(o, true);
     im.onerror = () => o.classList.add('fallback');
@@ -189,7 +246,9 @@ main{width:100%}
         selected = o; o.classList.add('is-selected'); play(o); return;
       }
       busy = true; o.classList.add('launching'); stage.classList.add('leaving'); play(o);
-      setTimeout(() => { location.href = o.href; }, reduce ? 0 : 650);
+      if (!bgm.paused) ramp(0, 600);
+      const wait = new Promise(r => setTimeout(r, reduce ? 0 : 650)), cap = new Promise(r => setTimeout(r, 1800));
+      Promise.race([Promise.all([wait, o._ready]), cap]).then(() => { location.href = o.href; });
     });
   });
   document.addEventListener('click', e => {      // tap the desk to put the selected object back
@@ -199,10 +258,12 @@ main{width:100%}
 
   document.getElementById('play').addEventListener('click', e => {
     e.preventDefault(); if (busy) return; busy = true;
-    location.href = objs[Math.floor(Math.random() * objs.length)].href;
+    const o = objs[Math.floor(Math.random() * objs.length)];
+    if (!bgm.paused) ramp(0, 500);
+    Promise.race([o._ready, new Promise(r => setTimeout(r, 1800))]).then(() => { location.href = o.href; });
   });
   // Back/forward cache: restore the hub to its idle state.
-  addEventListener('pageshow', e => { if (e.persisted) { busy = false; stage.classList.remove('leaving'); objs.forEach(o => { o.classList.remove('launching', 'is-selected'); rest(o); }); selected = null; } });
+  addEventListener('pageshow', e => { if (e.persisted) { startMusic(); busy = false; stage.classList.remove('leaving'); objs.forEach(o => { o.classList.remove('launching', 'is-selected'); rest(o); }); selected = null; } });
 
   // Playful text: headline words rise in (and jiggle on hover); "Remember these?" bounces letter by letter.
   const split = (el, byWord) => {
