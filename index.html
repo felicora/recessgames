@@ -9,79 +9,73 @@
 <link rel="canonical" href="https://recessgames.example/">
 <meta property="og:title" content="Recess Games | Nostalgic Childhood Games Online">
 <meta property="og:description" content="The Little Games That Made Big Memories.">
-<meta property="og:image" content="desk.jpg">
-<link rel="preload" as="image" href="desk.jpg" media="(min-aspect-ratio: 4/5)">
+<meta property="og:image" content="desk.jpg?v=2">
+<link rel="preload" as="image" href="desk.jpg?v=2" media="(min-aspect-ratio: 4/5)">
 <link rel="preload" as="image" href="wood.jpg" media="(max-aspect-ratio: 4/5)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap">
 <style>
-:root{--k:1;--ink:#2b2118;--paper:#f4ead2;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,.8,.3,1);
+:root{--cqw:1vw;--k:1;--ink:#2b2118;--paper:#f4ead2;--spring:cubic-bezier(.34,1.56,.64,1);--ease:cubic-bezier(.22,.8,.3,1);
   --hand:"Caveat","Segoe Print","Bradley Hand",cursive}
 *{box-sizing:border-box}
 html,body{overflow-x:hidden;margin:0;background:#e9dcc0;color:var(--ink)}
 body{min-height:100vh;display:flex;align-items:center;justify-content:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 main{width:100%}
-/* On narrow screens the desk keeps a readable size and pans sideways instead of shrinking the objects. */
+
 .scroller{overflow-x:clip;overflow-y:visible}
 .stage{position:relative;width:min(100%,calc(100vh*1.7778));width:min(100%,calc(100svh*1.7778));min-width:min(100%,640px);max-width:1900px;margin:0 auto;aspect-ratio:2048/1152;
-  container-type:inline-size;background:url(desk.jpg) center/100% 100% no-repeat;isolation:isolate}
+  container-type:inline-size;background:url(desk.jpg?v=2) center/100% 100% no-repeat;isolation:isolate}
 .stage>img.bg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
 
-.note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:calc(.9cqw*var(--k)) calc(1.1cqw*var(--k)) calc(1cqw*var(--k));background:var(--paper);
-  transform:rotate(-1.6deg);box-shadow:calc(.1cqw*var(--k)) calc(.35cqw*var(--k)) calc(.8cqw*var(--k)) rgba(60,35,15,.3);font-family:var(--hand);z-index:1;
+.note{position:absolute;left:5.8%;top:5.4%;width:20.5%;padding:calc(.9*var(--cqw)*var(--k)) calc(1.1*var(--cqw)*var(--k)) calc(1*var(--cqw)*var(--k));background:var(--paper);
+  transform:rotate(-1.6deg);box-shadow:calc(.1*var(--cqw)*var(--k)) calc(.35*var(--cqw)*var(--k)) calc(.8*var(--cqw)*var(--k)) rgba(60,35,15,.3);font-family:var(--hand);z-index:1;
   clip-path:polygon(0 1%,4% 0,100% 1.5%,99% 100%,60% 98.5%,0 100%)}
-.note::before{content:"";position:absolute;left:38%;top:calc(-.9cqw*var(--k));width:calc(6cqw*var(--k));height:calc(1.8cqw*var(--k));background:rgba(236,214,150,.8);transform:rotate(2deg)}
-.note .tag{margin:0;font-size:calc(1.05cqw*var(--k));font-weight:600;opacity:.75}
-.note .head{margin:calc(.2cqw*var(--k)) 0 0;font-size:calc(2cqw*var(--k));line-height:1.02;font-weight:700}
+.note::before{content:"";position:absolute;left:38%;top:calc(-.9*var(--cqw)*var(--k));width:calc(6*var(--cqw)*var(--k));height:calc(1.8*var(--cqw)*var(--k));background:rgba(236,214,150,.8);transform:rotate(2deg)}
+.note .tag{margin:0;font-size:calc(1.05*var(--cqw)*var(--k));font-weight:600;opacity:.75}
+.note .head{margin:calc(.2*var(--cqw)*var(--k)) 0 0;font-size:calc(2*var(--cqw)*var(--k));line-height:1.02;font-weight:700}
 
-/* Stationary hit-area wrapper; only .lift moves, so hover never flickers. */
+
 .obj{color:var(--ink);text-decoration:none;position:absolute;display:block;z-index:2;-webkit-tap-highlight-color:transparent;outline:none;
-  left:var(--x);top:var(--y);width:var(--w);height:var(--h);padding:0;cursor:pointer;--rot:0deg}
-.obj:hover,.obj:focus-visible,.obj.is-selected{z-index:20}
+  left:var(--x);top:var(--y);width:var(--w);height:var(--h);padding:0;cursor:pointer;--rot:0deg}.obj:focus-visible,.obj.is-selected{z-index:20}@media (hover:hover){.obj:hover{z-index:20}}
 .lift{position:absolute;inset:0;transform-origin:50% 85%;pointer-events:none;
   transition:transform .55s var(--ease),filter .4s var(--ease)}
 .lift img{display:block;width:100%;height:100%;object-fit:contain;user-select:none;-webkit-user-drag:none}
 .shadow{position:absolute;left:8%;right:8%;bottom:-2%;height:14%;border-radius:50%;pointer-events:none;
   background:radial-gradient(closest-side,rgba(50,25,8,.45),transparent);opacity:0;transform:scale(.7);
-  transition:opacity .4s var(--ease),transform .55s var(--spring)}
-.obj:hover .lift,.obj:focus-visible .lift,.obj.is-selected .lift{
+  transition:opacity .4s var(--ease),transform .55s var(--spring)}.obj:focus-visible .lift,.obj.is-selected .lift{
   transform:translateY(-6%) scale(1.14) rotate(var(--rot));
-  filter:drop-shadow(0 calc(1.1cqw*var(--k)) calc(.9cqw*var(--k)) rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}
-.obj:hover .shadow,.obj:focus-visible .shadow,.obj.is-selected .shadow{opacity:1;transform:scale(1.1) translateY(calc(1.2cqw*var(--k)))}
-.obj:focus-visible::after{content:"";position:absolute;inset:-6%;border:calc(.25cqw*var(--k)) dashed var(--paper);border-radius:calc(1.2cqw*var(--k));
-  box-shadow:0 0 0 calc(.2cqw*var(--k)) var(--ink);pointer-events:none}
-.obj.fallback:hover .lift,.obj.fallback.is-selected .lift{animation:wob .9s ease-in-out infinite alternate}
+  filter:drop-shadow(0 calc(1.1*var(--cqw)*var(--k)) calc(.9*var(--cqw)*var(--k)) rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}@media (hover:hover){.obj:hover .lift{
+  transform:translateY(-6%) scale(1.14) rotate(var(--rot));
+  filter:drop-shadow(0 calc(1.1*var(--cqw)*var(--k)) calc(.9*var(--cqw)*var(--k)) rgba(50,25,8,.35)) brightness(1.04);transition:transform .6s var(--spring),filter .4s var(--ease)}}.obj:focus-visible .shadow,.obj.is-selected .shadow{opacity:1;transform:scale(1.1) translateY(calc(1.2*var(--cqw)*var(--k)))}@media (hover:hover){.obj:hover .shadow{opacity:1;transform:scale(1.1) translateY(calc(1.2*var(--cqw)*var(--k)))}}
+.obj:focus-visible::after{content:"";position:absolute;inset:-6%;border:calc(.25*var(--cqw)*var(--k)) dashed var(--paper);border-radius:calc(1.2*var(--cqw)*var(--k));
+  box-shadow:0 0 0 calc(.2*var(--cqw)*var(--k)) var(--ink);pointer-events:none}.obj.fallback.is-selected .lift{animation:wob .9s ease-in-out infinite alternate}@media (hover:hover){.obj.fallback:hover .lift{animation:wob .9s ease-in-out infinite alternate}}
 @keyframes wob{to{transform:translateY(-6%) scale(1.14) rotate(calc(var(--rot) * -1))}}
 
-.label{position:absolute;left:50%;bottom:104%;padding:calc(.5cqw*var(--k)) calc(1.3cqw*var(--k)) calc(.6cqw*var(--k));white-space:nowrap;pointer-events:none;
-  background:var(--paper) repeating-linear-gradient(transparent 0 calc(1.3cqw*var(--k)),rgba(90,130,190,.22) calc(1.3cqw*var(--k)) calc(1.38cqw*var(--k)));
-  font:700 calc(2.2cqw*var(--k))/1 var(--hand);text-align:center;box-shadow:calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) calc(.7cqw*var(--k)) rgba(50,25,8,.35);
-  opacity:0;transform:translate(-50%,calc(1cqw*var(--k))) rotate(-3deg) scale(.85);transition:opacity .25s,transform .45s var(--spring)}
-.label::before{content:"";position:absolute;left:50%;top:calc(-.7cqw*var(--k));width:calc(3.6cqw*var(--k));height:calc(1.2cqw*var(--k));margin-left:calc(-1.8cqw*var(--k));background:rgba(236,214,150,.85);transform:rotate(-4deg)}
-.label small{display:none;font-size:calc(1.5cqw*var(--k));opacity:.7}
-@media (hover:none){.label small{display:block}}
-.obj:hover .label,.obj:focus-visible .label,.obj.is-selected .label{opacity:1;transform:translate(-50%,0) rotate(-3deg) scale(1)}
+.label{position:absolute;left:50%;bottom:104%;padding:calc(.5*var(--cqw)*var(--k)) calc(1.3*var(--cqw)*var(--k)) calc(.6*var(--cqw)*var(--k));white-space:nowrap;pointer-events:none;
+  background:var(--paper) repeating-linear-gradient(transparent 0 calc(1.3*var(--cqw)*var(--k)),rgba(90,130,190,.22) calc(1.3*var(--cqw)*var(--k)) calc(1.38*var(--cqw)*var(--k)));
+  font:700 calc(2.2*var(--cqw)*var(--k))/1 var(--hand);text-align:center;box-shadow:calc(.1*var(--cqw)*var(--k)) calc(.3*var(--cqw)*var(--k)) calc(.7*var(--cqw)*var(--k)) rgba(50,25,8,.35);
+  opacity:0;transform:translate(-50%,calc(1*var(--cqw)*var(--k))) rotate(-3deg) scale(.85);transition:opacity .25s,transform .45s var(--spring)}
+.label::before{content:"";position:absolute;left:50%;top:calc(-.7*var(--cqw)*var(--k));width:calc(3.6*var(--cqw)*var(--k));height:calc(1.2*var(--cqw)*var(--k));margin-left:calc(-1.8*var(--cqw)*var(--k));background:rgba(236,214,150,.85);transform:rotate(-4deg)}
+.label small{display:none;font-size:calc(1.5*var(--cqw)*var(--k));opacity:.7}
+@media (hover:none){.label small{display:block}}.obj:focus-visible .label,.obj.is-selected .label{opacity:1;transform:translate(-50%,0) rotate(-3deg) scale(1)}@media (hover:hover){.obj:hover .label{opacity:1;transform:translate(-50%,0) rotate(-3deg) scale(1)}}
 
-.play{position:absolute;left:34.6%;top:82.5%;width:31%;height:11.2%;z-index:2;border-radius:calc(.8cqw*var(--k));outline:none;transition:transform .4s var(--spring)}
-.play:hover{transform:translateY(calc(-.5cqw*var(--k))) rotate(-.6deg)}
-.play:focus-visible{box-shadow:0 0 0 calc(.3cqw*var(--k)) var(--paper),0 0 0 calc(.5cqw*var(--k)) var(--ink)}
+.play{position:absolute;left:34.6%;top:82.5%;width:31%;height:11.2%;z-index:2;border-radius:calc(.8*var(--cqw)*var(--k));outline:none;transition:transform .4s var(--spring)}@media (hover:hover){.play:hover{transform:translateY(calc(-.5*var(--cqw)*var(--k))) rotate(-.6deg)}}
+.play:focus-visible{box-shadow:0 0 0 calc(.3*var(--cqw)*var(--k)) var(--paper),0 0 0 calc(.5*var(--cqw)*var(--k)) var(--ink)}
 
 .obj.launching{z-index:30}
 .obj.launching .lift{transform:translateY(-10%) scale(1.45) rotate(var(--rot));transition:transform .5s var(--ease)}
 .stage.leaving .obj:not(.launching){opacity:.35;transition:opacity .4s}
 @media (prefers-reduced-motion:reduce){
-  .lift,.shadow,.label,.play{transition:opacity .2s!important}
-  .obj:hover .lift,.obj:focus-visible .lift,.obj.is-selected .lift,.obj.launching .lift{transform:none!important}
+  .lift,.shadow,.label,.play{transition:opacity .2s!important}.obj:focus-visible .lift,.obj.is-selected .lift,.obj.launching .lift{transform:none!important}@media (hover:hover){.obj:hover .lift{transform:none!important}}
   .obj.fallback .lift{animation:none!important}}
 
-/* ---------- motion ---------- */
+
 .stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;background:linear-gradient(105deg,transparent 42%,rgba(255,238,190,.16) 50%,transparent 58%) 0 0/260% 100%;animation:sweep 11s linear infinite}
 @keyframes sweep{from{background-position:130% 0}to{background-position:-130% 0}}
 .obj{animation:drop .9s var(--spring) backwards;animation-delay:calc(var(--n)*.14s + .25s)}
 @keyframes drop{0%{opacity:0;transform:translateY(-55%) scale(1.5) rotate(calc(var(--rot)*3))}60%{opacity:1}}
-.obj img{animation:var(--idle) var(--dur,4s) ease-in-out infinite;animation-delay:calc(var(--n)*.14s + 1.4s)}
-.obj:hover img,.obj:focus-visible img,.obj.is-selected img,.obj.launching img{animation:none}
+.obj img{animation:var(--idle) var(--dur,4s) ease-in-out infinite;animation-delay:calc(var(--n)*.14s + 1.4s)}.obj:focus-visible img,.obj.is-selected img,.obj.launching img{animation:none}@media (hover:hover){.obj:hover img{animation:none}}
 @keyframes snap{0%,100%{transform:none}35%{transform:scale(1.05,.95) rotate(2.5deg)}65%{transform:scale(.97,1.04) rotate(-2deg)}}
 @keyframes sway{0%,100%{transform:rotate(-1.4deg)}50%{transform:rotate(1.6deg) translateX(.5%)}}
 @keyframes tap{0%,45%,100%{transform:none}12%{transform:translateY(-4%) rotate(-3deg)}25%{transform:translateY(0) rotate(2deg)}35%{transform:translateY(-2%)}}
@@ -90,81 +84,74 @@ main{width:100%}
 .obj.nudge .lift{animation:hop .95s var(--spring)}
 @keyframes hop{0%,100%{transform:none}30%{transform:translateY(-10%) scale(1.08) rotate(var(--rot))}55%{transform:none}72%{transform:translateY(-3%)}}
 
-.spark{position:absolute;font-style:normal;font-size:calc(2cqw*var(--k));line-height:1;color:#ffe7a0;text-shadow:0 0 calc(.6cqw*var(--k)) rgba(255,190,70,.95);opacity:0;pointer-events:none;z-index:2}
-.s1{left:-7%;top:-3%}.s2{right:-9%;top:8%}.s3{left:0;bottom:4%}.s4{right:-5%;bottom:-3%}
-.obj:hover .spark,.obj:focus-visible .spark,.obj.is-selected .spark{animation:pop .6s var(--spring) both,twinkle 1.3s ease-in-out .7s infinite}
-.obj:hover .s2,.obj:focus-visible .s2,.obj.is-selected .s2{animation-delay:.08s,.8s}
-.obj:hover .s3,.obj:focus-visible .s3,.obj.is-selected .s3{animation-delay:.16s,.9s}
-.obj:hover .s4,.obj:focus-visible .s4,.obj.is-selected .s4{animation-delay:.24s,1s}
+.spark{position:absolute;font-style:normal;font-size:calc(2*var(--cqw)*var(--k));line-height:1;color:#ffe7a0;text-shadow:0 0 calc(.6*var(--cqw)*var(--k)) rgba(255,190,70,.95);opacity:0;pointer-events:none;z-index:2}
+.s1{left:-7%;top:-3%}.s2{right:-9%;top:8%}.s3{left:0;bottom:4%}.s4{right:-5%;bottom:-3%}.obj:focus-visible .spark,.obj.is-selected .spark{animation:pop .6s var(--spring) both,twinkle 1.3s ease-in-out .7s infinite}@media (hover:hover){.obj:hover .spark{animation:pop .6s var(--spring) both,twinkle 1.3s ease-in-out .7s infinite}}.obj:focus-visible .s2,.obj.is-selected .s2{animation-delay:.08s,.8s}@media (hover:hover){.obj:hover .s2{animation-delay:.08s,.8s}}.obj:focus-visible .s3,.obj.is-selected .s3{animation-delay:.16s,.9s}@media (hover:hover){.obj:hover .s3{animation-delay:.16s,.9s}}.obj:focus-visible .s4,.obj.is-selected .s4{animation-delay:.24s,1s}@media (hover:hover){.obj:hover .s4{animation-delay:.24s,1s}}
 @keyframes pop{0%{opacity:0;transform:scale(0) rotate(0)}45%{opacity:1;transform:scale(1.4) rotate(90deg)}100%{opacity:.95;transform:scale(1) rotate(180deg)}}
 @keyframes twinkle{0%,100%{opacity:.95;transform:scale(1) rotate(180deg)}50%{opacity:.3;transform:scale(.65) rotate(230deg)}}
 
 .note,.slip,.hint{animation:slipin .8s var(--spring) backwards}
 .note{animation-delay:.1s}.slip{animation-delay:.9s}.hint{animation-delay:1.3s}
-@keyframes slipin{from{opacity:0;transform:translateY(calc(-6cqw*var(--k))) rotate(-14deg) scale(.8)}}
+@keyframes slipin{from{opacity:0;transform:translateY(calc(-6*var(--cqw)*var(--k))) rotate(-14deg) scale(.8)}}
 .head .w{display:inline-block;animation:rise .7s var(--spring) backwards;animation-delay:calc(var(--i)*.1s + .5s)}
-@keyframes rise{from{opacity:0;transform:translateY(calc(1.4cqw*var(--k))) rotate(7deg)}}
-.head .w:hover{animation:jig .45s;animation-delay:0s}
-@keyframes jig{50%{transform:translateY(calc(-.4cqw*var(--k))) rotate(-6deg) scale(1.12)}}
+@keyframes rise{from{opacity:0;transform:translateY(calc(1.4*var(--cqw)*var(--k))) rotate(7deg)}}@media (hover:hover){.head .w:hover{animation:jig .45s;animation-delay:0s}}
+@keyframes jig{50%{transform:translateY(calc(-.4*var(--cqw)*var(--k))) rotate(-6deg) scale(1.12)}}
 
-.slip{position:absolute;left:5.8%;top:77.5%;width:24%;margin:0;padding:calc(1cqw*var(--k)) calc(1.3cqw*var(--k)) calc(.9cqw*var(--k));background:var(--paper);transform:rotate(1.4deg);box-shadow:calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) calc(.7cqw*var(--k)) rgba(60,35,15,.3);z-index:1;clip-path:polygon(0 2%,100% 0,98% 100%,2% 98%)}
-.slip::before,.slip::after{content:"✦";position:absolute;color:#d9a21b;font-size:calc(1.5cqw*var(--k));animation:twinkle 2.2s ease-in-out infinite}
-.slip::before{right:calc(.8cqw*var(--k));top:calc(.4cqw*var(--k))}.slip::after{right:calc(2.8cqw*var(--k));bottom:calc(.3cqw*var(--k));font-size:calc(1cqw*var(--k));animation-delay:.9s}
-.wave{display:block;font:700 calc(2.3cqw*var(--k))/1 var(--hand);white-space:nowrap}
+.slip{position:absolute;left:5.8%;top:77.5%;width:24%;margin:0;padding:calc(1*var(--cqw)*var(--k)) calc(1.3*var(--cqw)*var(--k)) calc(.9*var(--cqw)*var(--k));background:var(--paper);transform:rotate(1.4deg);box-shadow:calc(.1*var(--cqw)*var(--k)) calc(.3*var(--cqw)*var(--k)) calc(.7*var(--cqw)*var(--k)) rgba(60,35,15,.3);z-index:1;clip-path:polygon(0 2%,100% 0,98% 100%,2% 98%)}
+.slip::before,.slip::after{content:"✦";position:absolute;color:#d9a21b;font-size:calc(1.5*var(--cqw)*var(--k));animation:twinkle 2.2s ease-in-out infinite}
+.slip::before{right:calc(.8*var(--cqw)*var(--k));top:calc(.4*var(--cqw)*var(--k))}.slip::after{right:calc(2.8*var(--cqw)*var(--k));bottom:calc(.3*var(--cqw)*var(--k));font-size:calc(1*var(--cqw)*var(--k));animation-delay:.9s}
+.wave{display:block;font:700 calc(2.3*var(--cqw)*var(--k))/1 var(--hand);white-space:nowrap}
 .wave .l{display:inline-block;animation:bob 2s ease-in-out infinite;animation-delay:calc(var(--i)*.08s + 1.6s)}
-.wave .l.sp{width:calc(.6cqw*var(--k))}
+.wave .l.sp{width:calc(.6*var(--cqw)*var(--k))}
 .wave .l:nth-child(4n+1){color:#b8392b}.wave .l:nth-child(4n+2){color:#2f6aa8}.wave .l:nth-child(4n+3){color:#c58e0c}.wave .l:nth-child(4n){color:#2c7a73}
-@keyframes bob{0%,55%,100%{transform:none}28%{transform:translateY(calc(-.55cqw*var(--k))) rotate(-5deg)}}
-.slip .sub{display:block;margin-top:calc(.35cqw*var(--k));font:600 calc(1.45cqw*var(--k))/1 var(--hand);opacity:.8}
-.hint{position:absolute;left:79.5%;top:70%;width:15%;margin:0;font:700 calc(2.1cqw*var(--k))/1.05 var(--hand);color:#fbf1d8;text-shadow:calc(.1cqw*var(--k)) calc(.15cqw*var(--k)) calc(.3cqw*var(--k)) rgba(50,25,8,.7);transform:rotate(-2deg);z-index:1;pointer-events:none}
-.hint svg{display:block;width:calc(4.5cqw*var(--k));height:calc(6cqw*var(--k));margin:0 0 calc(.3cqw*var(--k)) calc(1cqw*var(--k));fill:none;stroke:#fbf1d8;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(calc(.1cqw*var(--k)) calc(.15cqw*var(--k)) calc(.2cqw*var(--k)) rgba(50,25,8,.6))}
+@keyframes bob{0%,55%,100%{transform:none}28%{transform:translateY(calc(-.55*var(--cqw)*var(--k))) rotate(-5deg)}}
+.slip .sub{display:block;margin-top:calc(.35*var(--cqw)*var(--k));font:600 calc(1.45*var(--cqw)*var(--k))/1 var(--hand);opacity:.8}
+.hint{position:absolute;left:79.5%;top:70%;width:15%;margin:0;font:700 calc(2.1*var(--cqw)*var(--k))/1.05 var(--hand);color:#fbf1d8;text-shadow:calc(.1*var(--cqw)*var(--k)) calc(.15*var(--cqw)*var(--k)) calc(.3*var(--cqw)*var(--k)) rgba(50,25,8,.7);transform:rotate(-2deg);z-index:1;pointer-events:none}
+.hint svg{display:block;width:calc(4.5*var(--cqw)*var(--k));height:calc(6*var(--cqw)*var(--k));margin:0 0 calc(.3*var(--cqw)*var(--k)) calc(1*var(--cqw)*var(--k));fill:none;stroke:#fbf1d8;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(calc(.1*var(--cqw)*var(--k)) calc(.15*var(--cqw)*var(--k)) calc(.2*var(--cqw)*var(--k)) rgba(50,25,8,.6))}
 .hint path{stroke-dasharray:100;animation:draw 3.2s ease-in-out 2s infinite}
 @keyframes draw{0%{stroke-dashoffset:100}40%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:0;opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important}.hint path{stroke-dashoffset:0}}
 
-/* ---------- music toggle (sits over the painted music icon) ---------- */
-.music,.gear{position:absolute;left:83.2%;top:28.6%;width:7.4%;height:10.4%;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:3;transition:transform .4s var(--spring);-webkit-tap-highlight-color:transparent}
-.music:hover,.gear:hover{transform:scale(1.1) rotate(-6deg)}
-.music:focus-visible,.gear:focus-visible{outline:none;box-shadow:0 0 0 calc(.3cqw*var(--k)) var(--paper),0 0 0 calc(.5cqw*var(--k)) var(--ink)}
-.slash{position:absolute;left:10%;right:10%;top:46%;height:calc(.55cqw*var(--k));border-radius:calc(1cqw*var(--k));background:#b8392b;box-shadow:0 calc(.1cqw*var(--k)) calc(.3cqw*var(--k)) rgba(0,0,0,.4);transform:rotate(-38deg) scaleX(0);transition:transform .35s var(--spring)}
+
+.music,.gear{position:absolute;left:83.2%;top:28.6%;width:7.4%;height:10.4%;padding:0;border:0;border-radius:50%;background:transparent;cursor:pointer;z-index:3;transition:transform .4s var(--spring);-webkit-tap-highlight-color:transparent}@media (hover:hover){.music:hover,.gear:hover{transform:scale(1.1) rotate(-6deg)}}
+.music:focus-visible,.gear:focus-visible{outline:none;box-shadow:0 0 0 calc(.3*var(--cqw)*var(--k)) var(--paper),0 0 0 calc(.5*var(--cqw)*var(--k)) var(--ink)}
+.slash{position:absolute;left:10%;right:10%;top:46%;height:calc(.55*var(--cqw)*var(--k));border-radius:calc(1*var(--cqw)*var(--k));background:#b8392b;box-shadow:0 calc(.1*var(--cqw)*var(--k)) calc(.3*var(--cqw)*var(--k)) rgba(0,0,0,.4);transform:rotate(-38deg) scaleX(0);transition:transform .35s var(--spring)}
 .music[aria-pressed="false"] .slash{transform:rotate(-38deg) scaleX(1)}
-.mn{position:absolute;left:30%;top:20%;font:700 calc(2.6cqw*var(--k))/1 var(--hand);font-style:normal;color:#fbf1d8;text-shadow:0 calc(.1cqw*var(--k)) calc(.4cqw*var(--k)) rgba(50,25,8,.85);opacity:0;pointer-events:none}
+.mn{position:absolute;left:30%;top:20%;font:700 calc(2.6*var(--cqw)*var(--k))/1 var(--hand);font-style:normal;color:#fbf1d8;text-shadow:0 calc(.1*var(--cqw)*var(--k)) calc(.4*var(--cqw)*var(--k)) rgba(50,25,8,.85);opacity:0;pointer-events:none}
 .music[aria-pressed="true"] .mn{animation:floatnote 3s ease-out infinite}
 @keyframes floatnote{0%{opacity:0;transform:translate(0,0) rotate(0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(-20deg)}}
 
-/* ---------- tool objects, icons, decor ---------- */
+
 button.obj{background:none;border:0;font:inherit;text-align:inherit}
 .music{left:83.5%;top:27.7%;width:7.1%;height:12.6%}
 .gear{left:83.35%;top:13.3%;width:7.3%;height:11.9%}
 .ico .art,.play .art,.deco{display:none}
-.ico .art{width:100%;height:100%;object-fit:contain;pointer-events:none;transition:transform .7s var(--spring)}
-.gear:hover .art,.gear:focus-visible .art{transform:rotate(90deg)}
+.ico .art{width:100%;height:100%;object-fit:contain;pointer-events:none;transition:transform .7s var(--spring)}.gear:focus-visible .art{transform:rotate(90deg)}@media (hover:hover){.gear:hover .art{transform:rotate(90deg)}}
 .stage.calm *,.stage.calm::after{animation:none!important}
 .stage.calm .spark{display:none}
 body.noscroll{overflow:hidden}
 
-/* ---------- portrait phones: a taller desk rebuilt from the same artwork ---------- */
+
 @media (max-aspect-ratio:4/5){
   :root{--k:2.6}
   body{align-items:flex-start}
-  .stage{width:min(100%,640px);min-width:0;aspect-ratio:100/236;background:url(wood.jpg) 0 0/100% auto repeat;box-shadow:inset 0 0 9vw rgba(70,35,10,.45)}
+  .stage{width:min(100%,640px);min-width:0;aspect-ratio:100/236;background:url(wood.jpg) 0 0/100% auto repeat #d9a572;box-shadow:inset 0 0 9vw rgba(70,35,10,.45)}
   .obj,.ico,.play,.deco{left:var(--px);top:var(--py);width:var(--pw);height:var(--ph)}
   .ico .art,.play .art,.deco{display:block}
-  .play .art{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 .8cqw 1.2cqw rgba(50,25,8,.4))}
-  .deco{position:absolute;pointer-events:none;z-index:1;object-fit:contain;filter:drop-shadow(0 1cqw 1.4cqw rgba(50,25,8,.38))}
-  .ico .art{filter:drop-shadow(0 .8cqw 1.1cqw rgba(50,25,8,.4))}
-  .note{left:5%;top:10.6%;width:60%;padding:3.4cqw 3.8cqw 3.6cqw}
-  .note .tag{font-size:3.3cqw}.note .head{font-size:5.7cqw;margin-top:1cqw}
-  .slip{left:17%;top:78.8%;width:43%;padding:2.4cqw 3cqw 2.2cqw}
-  .wave{font-size:4.5cqw}.slip .sub{font-size:3.6cqw;margin-top:.8cqw}
-  .slip::before{font-size:4cqw;right:2cqw;top:1cqw}.slip::after{font-size:3cqw;right:7cqw;bottom:1cqw}
-  .hint{left:66%;top:19%;width:31%;font-size:4.7cqw}
+  .play .art{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 calc(.8*var(--cqw)) calc(1.2*var(--cqw)) rgba(50,25,8,.4))}
+  .deco{position:absolute;pointer-events:none;z-index:1;object-fit:contain;filter:drop-shadow(0 calc(1*var(--cqw)) calc(1.4*var(--cqw)) rgba(50,25,8,.38))}
+  .ico .art{filter:drop-shadow(0 calc(.8*var(--cqw)) calc(1.1*var(--cqw)) rgba(50,25,8,.4))}
+  .note{left:5%;top:10.6%;width:60%;padding:calc(3.4*var(--cqw)) calc(3.8*var(--cqw)) calc(3.6*var(--cqw))}
+  .note .tag{font-size:calc(3.3*var(--cqw))}.note .head{font-size:calc(5.7*var(--cqw));margin-top:calc(1*var(--cqw))}
+  .slip{left:17%;top:78.8%;width:43%;padding:calc(2.4*var(--cqw)) calc(3*var(--cqw)) calc(2.2*var(--cqw))}
+  .wave{font-size:calc(4.5*var(--cqw))}.slip .sub{font-size:calc(3.6*var(--cqw));margin-top:calc(.8*var(--cqw))}
+  .slip::before{font-size:calc(4*var(--cqw));right:calc(2*var(--cqw));top:calc(1*var(--cqw))}.slip::after{font-size:calc(3*var(--cqw));right:calc(7*var(--cqw));bottom:calc(1*var(--cqw))}
+  .hint{left:66%;top:19%;width:31%;font-size:calc(4.7*var(--cqw))}
   .hint svg{display:none}
-  .label{left:calc(50% + var(--ls,0%));font-size:4.8cqw;padding:1.3cqw 3.2cqw 1.5cqw}.label small{font-size:3.7cqw}
-  .spark{font-size:5cqw}
+  .label{left:calc(50% + var(--ls,0%));font-size:calc(4.8*var(--cqw));padding:calc(1.3*var(--cqw)) calc(3.2*var(--cqw)) calc(1.5*var(--cqw))}.label small{font-size:calc(3.7*var(--cqw))}
+  .spark{font-size:calc(5*var(--cqw))}
 }
 
-/* ---------- paper sheets (settings + doodle pad) ---------- */
+
 .ov{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom));background:rgba(38,22,10,.66);opacity:0;transition:opacity .25s;overscroll-behavior:contain}
 .ov.open{opacity:1}.ov[hidden],.sheet[hidden]{display:none}
 .sheet{position:relative;width:min(100%,560px);color:var(--ink);font-family:var(--hand);background:linear-gradient(transparent 31px,rgba(90,130,190,.22) 32px) 0 6px/100% 32px,var(--paper);border-radius:6px 14px 8px 16px;box-shadow:0 18px 44px rgba(30,15,5,.55),inset 0 0 22px rgba(150,100,40,.18);opacity:0;transform:translateY(28px) rotate(-1.2deg) scale(.95);transition:transform .5s var(--spring),opacity .25s}
@@ -175,8 +162,7 @@ body.noscroll{overflow:hidden}
 .sheet-in::before{content:"";position:absolute;left:28px;top:0;bottom:0;width:2px;background:rgba(200,70,50,.28);pointer-events:none}
 .sheet h2{margin:0;font-size:42px;line-height:1;font-weight:700;transform:rotate(-1deg)}
 .sheet .sub{margin:4px 0 0;font-size:22px;font-weight:600;opacity:.75}
-.chip{font:700 22px/1 var(--hand);color:var(--ink);padding:10px 16px;min-height:46px;min-width:46px;background:#fff7e0;border:2.5px solid var(--ink);border-radius:255px 14px 225px 14px/14px 225px 14px 255px;cursor:pointer;box-shadow:2px 3px 0 rgba(43,33,24,.85);transition:transform .2s var(--spring),box-shadow .2s,background .2s;-webkit-tap-highlight-color:transparent}
-.chip:hover{transform:translateY(-1px) rotate(-1deg)}
+.chip{font:700 22px/1 var(--hand);color:var(--ink);padding:10px 16px;min-height:46px;min-width:46px;background:#fff7e0;border:2.5px solid var(--ink);border-radius:255px 14px 225px 14px/14px 225px 14px 255px;cursor:pointer;box-shadow:2px 3px 0 rgba(43,33,24,.85);transition:transform .2s var(--spring),box-shadow .2s,background .2s;-webkit-tap-highlight-color:transparent}@media (hover:hover){.chip:hover{transform:translateY(-1px) rotate(-1deg)}}
 .chip:active,.chip[aria-checked=true]{background:#ffd45a;transform:translate(2px,3px);box-shadow:none}
 .chip:disabled{opacity:.4;pointer-events:none}
 .chip:focus-visible,.tg:focus-visible,.sw:focus-visible,#s-vol:focus-visible,.nm:focus-visible,#dd-cv:focus-visible{outline:3px dashed #c8472b;outline-offset:3px}
@@ -210,6 +196,8 @@ body.noscroll{overflow:hidden}
 }
 .x{position:absolute;right:10px;top:10px;z-index:3;padding:6px 12px;min-height:44px;font-size:24px}
 @media (prefers-reduced-motion:reduce){.sheet,.ov,.tg i,.chip,.padwrap{transition:none!important}}
+
+.obj.is-selected .label small{display:block}
 </style>
 </head>
 <body>
@@ -246,7 +234,7 @@ body.noscroll{overflow:hidden}
 
       <button class="ico gear" id="gear" type="button" aria-haspopup="dialog" aria-label="Open desk settings" style="--px:67%;--py:11.44%;--pw:14.5%;--ph:5.65%"><img class="art" src="icon-gear.png" width="149" height="137" alt=""></button>
       <button class="ico music" id="music" style="--px:83%;--py:11.44%;--pw:14.5%;--ph:6.10%" type="button" aria-pressed="true" aria-label="Background music: on. Press to turn off">
-        <img class="art" src="icon-music.png" width="146" height="145" alt=""><span class="slash"></span><i class="mn" style="--dx:-6cqw;--dy:-3cqw" aria-hidden="true">♪</i><i class="mn" style="--dx:-9cqw;--dy:1cqw;animation-delay:1s" aria-hidden="true">♫</i><i class="mn" style="--dx:-4cqw;--dy:-6cqw;animation-delay:2s" aria-hidden="true">♪</i>
+        <img class="art" src="icon-music.png" width="146" height="145" alt=""><span class="slash"></span><i class="mn" style="--dx:calc(-6*var(--cqw));--dy:calc(-3*var(--cqw))" aria-hidden="true">♪</i><i class="mn" style="--dx:calc(-9*var(--cqw));--dy:calc(1*var(--cqw));animation-delay:1s" aria-hidden="true">♫</i><i class="mn" style="--dx:calc(-4*var(--cqw));--dy:calc(-6*var(--cqw));animation-delay:2s" aria-hidden="true">♪</i>
       </button>
       <audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
@@ -323,7 +311,13 @@ body.noscroll{overflow:hidden}
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const touch = matchMedia('(hover: none)').matches;
+  let ptype = touch ? 'touch' : 'mouse';
+  addEventListener('pointerdown', e => { ptype = e.pointerType; }, true);
+  addEventListener('keydown', () => { ptype = 'key'; }, true);
+  const touchMode = () => ptype === 'touch';
   const stage = document.getElementById('stage');
+  const setU = () => stage.style.setProperty('--cqw', (stage.clientWidth / 100) + 'px');
+  setU(); if ('ResizeObserver' in window) new ResizeObserver(setU).observe(stage); else addEventListener('resize', setU);
   const sget = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
   const sset = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 
@@ -339,6 +333,8 @@ body.noscroll{overflow:hidden}
   const objs = [...stage.querySelectorAll('.obj')];
   let busy = false, selected = null, openId = null, opener = null;
   const $ = id => document.getElementById(id);
+  document.addEventListener('error', e => { if (e.target.tagName === 'IMG') { e.target.style.visibility = 'hidden'; console.warn('[Recess Games] Missing image file:', e.target.getAttribute('src')); } }, true);
+  addEventListener('load', () => document.querySelectorAll('img').forEach(i => { if (i.complete && !i.naturalWidth) i.dispatchEvent(new Event('error')); }));
   let lively = sget('rg-live') === 'on' || (sget('rg-live') === null && !reduce);
   stage.classList.toggle('calm', !lively);
 
@@ -397,7 +393,7 @@ body.noscroll{overflow:hidden}
     o.addEventListener('click', e => {
       e.preventDefault();
       if (busy) return;
-      if (touch && selected !== o) {            // touch: first tap lifts + names it, second tap opens
+      if (touchMode() && selected !== o) {            // touch: first tap lifts + names it, second tap opens
         if (selected) { selected.classList.remove('is-selected'); rest(selected); }
         selected = o; o.classList.add('is-selected'); play(o); return;
       }
