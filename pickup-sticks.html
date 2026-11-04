@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Pick-Up Sticks · Balik Sekolah</title>
+<title>Pick-Up Sticks · Back to School</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link href="https://fonts.googleapis.com/css2?family=Caveat+Brush&family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
@@ -33,10 +33,6 @@ h1 small{display:block;font:400 15px/1.1 "Patrick Hand",cursive;color:var(--ink2
 .stat{display:flex;align-items:baseline;gap:8px;margin-left:auto}
 .stat b{font:400 30px/1 "Caveat Brush",cursive;color:var(--navy)}
 .tools{display:flex;flex-wrap:wrap;gap:6px;flex-basis:100%;position:relative}
-details.keys{position:relative}
-details.keys summary{list-style:none}
-details.keys summary::-webkit-details-marker{display:none}
-details.keys div{position:absolute;z-index:5;top:42px;right:0;width:min(330px,86vw);background:var(--paper);border:2px solid var(--line);border-radius:6px;padding:10px 12px;box-shadow:0 6px 16px rgba(0,0,0,.35);line-height:1.45}
 #stage{position:relative;flex:1;min-height:0}
 canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;display:block;border-radius:4px}
 canvas:focus-visible{outline-offset:-3px}
@@ -50,17 +46,26 @@ canvas:focus-visible{outline-offset:-3px}
 #start .card::before{left:-14px;transform:rotate(-28deg)}#start .card::after{right:-14px;transform:rotate(26deg)}
 #start h2{margin:0;font:400 clamp(40px,9vw,66px)/1 "Caveat Brush",cursive;color:var(--navy)}
 #start p{margin:6px 0 20px;color:var(--ink2);font-size:20px}
-#start .btn{font-size:25px;padding:10px 26px;background:var(--gold);border-style:solid}
+#go{font-size:25px;padding:10px 26px;background:var(--gold);border-style:solid}#start .row{display:flex;flex-direction:column;align-items:center;gap:10px}
+.stepper{display:flex;align-items:center;gap:4px;flex:none}.stepper b{min-width:1.7em;text-align:center;font:400 24px/1 "Caveat Brush",cursive;color:var(--navy)}
+dialog#how{border:0;padding:0;background:transparent;color:var(--ink);width:min(580px,92vw);max-height:88vh;overflow:visible;font:inherit}
+dialog#how::backdrop{background:rgba(30,16,6,.62)}
+#how .sheet{position:relative;background:var(--paper);padding:22px 24px 20px;box-shadow:0 10px 30px rgba(0,0,0,.5);max-height:86vh;overflow:auto;border-radius:3px;line-height:1.35}
+#how h2{margin:0 0 6px;font:400 38px/1 "Caveat Brush",cursive;color:var(--navy)}
+#how h3{margin:14px 0 4px;font:400 24px/1 "Caveat Brush",cursive;color:var(--navy)}
+#how p{margin:6px 0}#how ol,#how ul{margin:6px 0;padding-left:22px}#how li{margin:5px 0}
+#how kbd{font:inherit;background:var(--paper2);border:1.5px solid var(--line);border-radius:4px;padding:0 5px}
+#how .credit{font-size:15px;color:var(--ink2);margin-top:12px}#how form{margin-top:12px;text-align:right}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (max-width:640px){h1{font-size:25px}h1 small,.lbl.rl{display:none}.bar{gap:4px 10px;padding:6px 10px}.btn{padding:2px 8px;font-size:17px;min-height:34px}.stat{margin-left:0}.stat b{font-size:25px}#msg{font-size:19px}
- .tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px 0}.tools .btn{flex:none;white-space:nowrap}details.keys div{position:fixed;left:10px;right:10px;top:130px;width:auto}.note{min-height:44px;padding:5px 12px}}
+ .tools{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:2px 0}.tools .btn{flex:none;white-space:nowrap}.note{min-height:44px;padding:5px 12px}}
 @media (prefers-reduced-motion:reduce){.btn{transition:none}.btn:hover:not(:disabled){transform:none}}
 </style>
 </head>
 <body>
 <div id="app">
  <header class="bar">
-  <h1>Pick-Up Sticks<small>Balik Sekolah</small></h1>
+  <h1>Pick-Up Sticks<small>Back to School</small></h1>
   <div class="grp" role="group" aria-label="Round"><span class="lbl rl">Round</span>
    <button class="btn" data-r="0">1</button><button class="btn" data-r="1">2</button><button class="btn" data-r="2">3</button><button class="btn" data-r="3">4</button></div>
   <div class="stat"><span class="lbl">Collected</span><b id="cnt">0 / 0</b><span class="lbl">Best <span id="best">0</span></span></div>
@@ -71,19 +76,46 @@ canvas:focus-visible{outline-offset:-3px}
    <button class="btn" id="undo" title="Put the selected stick back (before it moves)">Undo</button>
    <button class="btn" id="reset" title="Restore this pile as it landed">Reset pile</button>
    <button class="btn" id="again" title="Drop a new random pile">Drop again</button>
+   <span class="stepper"><span class="lbl">Sticks</span><button class="btn" id="nm" aria-label="Fewer sticks">−</button><b id="nn">8</b><button class="btn" id="np" aria-label="More sticks">+</button></span>
+   <button class="btn" id="lay" aria-pressed="false" title="Show which stick lies on top of which">Layers off</button>
    <button class="btn" id="snd" aria-pressed="true">Effects on</button>
    <button class="btn" id="mus" aria-pressed="true">Music on</button>
    <button class="btn" id="calm" aria-pressed="false">Calm motion off</button>
-   <details class="keys"><summary class="btn">Keys</summary><div>
-    <b>←/→</b> choose a stick<br><b>Enter / Space</b> pick up, put down<br><b>Arrows</b> move it (hold <b>Shift</b> for finer)<br><b>Q / E</b> turn it<br><b>Esc</b> or <b>Z</b> undo before it moves<br><b>+ / − / 0</b> zoom<hr>Music: “Cute BGM Compilation 3” by 브금대통령 BGM President (short clip, looped)</div></details>
+   <button class="btn" id="helpb">How to play</button>
   </div>
  </header>
  <main id="stage">
   <canvas id="cv" tabindex="0" aria-label="Pick-up sticks table. Use arrow keys to choose a stick."></canvas>
-  <div id="start"><div class="card"><h2>Pick-Up Sticks</h2><p>Balik Sekolah</p><button class="btn" id="go">Mula Bermain ▸</button></div></div>
+  <div id="start"><div class="card"><h2>Pick-Up Sticks</h2><p>Back to School</p><div class="row"><button class="btn" id="go">Start Playing ▸</button><button class="btn" id="how0">How to play</button></div></div></div>
  </main>
  <footer class="note"><div id="msg"></div><div id="acts"></div></footer>
- <div class="sr" id="live" aria-live="polite"></div>
+ <dialog id="how" aria-labelledby="howh"><div class="sheet">
+ <h2 id="howh">How to play</h2>
+ <p><strong>Goal:</strong> collect as many sticks as you can. Take one stick at a time <em>without moving any other stick</em>. If another stick moves, your turn ends. There is no timer, so slow and steady wins.</p>
+ <ol>
+  <li><b>Look closely.</b> The sticks lie in layers. A stick lying across another one is on top of it. Zoom with <b>+</b> / <b>−</b>, the mouse wheel, or a two-finger pinch. Press <b>Layers</b> to see a number on every stick: a higher number lies on top.</li>
+  <li><b>Pick one.</b> Click or tap a stick. A thin blue outline shows it is selected. A stick with nothing lying on it is the safest choice.</li>
+  <li><b>Drag it out slowly.</b> The stick moves at a limited speed. Slide it along its own length where you can, and keep it away from its neighbours.</li>
+  <li><b>Mind the support.</b> If a stick rests on the one you are pulling and would tip when it leaves, that counts as moving too.</li>
+  <li><b>Collect it.</b> When the stick is completely clear of the pile it slides into the pencil case and your score goes up.</li>
+ </ol>
+ <h3>When a stick moves</h3>
+ <p>The attempt ends. The stick that moved gets a red outline and a ring, and a dashed outline shows where it was. Press <b>Try again</b>, or go on to the next round.</p>
+ <h3>Choosing how many sticks</h3>
+ <p>Use <b>Sticks − / +</b> in the top bar to change how many sticks fall, from 4 to 40. Rounds 1 to 4 start with 8, 14, 22 and 24 sticks and get more crowded and more alike in colour. Picking a round sets the number back to its usual amount.</p>
+ <h3>Buttons</h3>
+ <ul>
+  <li><b>Undo</b> puts a selected stick back, but only before it starts to move.</li>
+  <li><b>Reset pile</b> brings back the same pile. <b>Drop again</b> makes a new random one.</li>
+  <li><b>Layers</b> shows stacking numbers. With a stick selected, sticks lying on top of it are outlined in orange and sticks underneath in blue.</li>
+  <li><b>Calm motion</b> removes the falling animation and shaking. <b>Effects</b> and <b>Music</b> switch sounds on and off.</li>
+ </ul>
+ <h3>Keyboard</h3>
+ <p><kbd>←</kbd> <kbd>→</kbd> choose a stick · <kbd>Enter</kbd> or <kbd>Space</kbd> pick it up and put it down · arrow keys move it (hold <kbd>Shift</kbd> for finer steps) · <kbd>Q</kbd> <kbd>E</kbd> turn it · <kbd>Esc</kbd> or <kbd>Z</kbd> undo · <kbd>+</kbd> <kbd>−</kbd> <kbd>0</kbd> zoom.</p>
+ <p class="credit">Music: “Cute BGM Compilation 3” by 브금대통령 BGM President (short clip, looped).</p>
+ <form method="dialog"><button class="btn pri">Got it</button></form>
+</div></dialog>
+<div class="sr" id="live" aria-live="polite"></div>
 </div>
 <script>
 (()=>{'use strict';
@@ -96,13 +128,14 @@ const ROUNDS=[{n:8,rx:190,ry:120,pal:BASE},{n:14,rx:135,ry:90,pal:BASE},{n:22,rx
 const cv=$('#cv'),ctx=cv.getContext('2d'),stage=$('#stage'),msg=$('#msg'),acts=$('#acts'),live_=$('#live');
 document.body.style.backgroundImage='url('+A.bg+')';
 /* ---------- storage (per-viewer convenience only) ---------- */
-let best=[0,0,0,0],tutDone=false;
+let best={},tutDone=false;
 try{best=JSON.parse(localStorage.getItem('pus-best'))||best;tutDone=localStorage.getItem('pus-tut')==='1'}catch(e){}
+if(!best||Array.isArray(best))best={};
 const save=()=>{try{localStorage.setItem('pus-best',JSON.stringify(best));localStorage.setItem('pus-tut',tutDone?'1':'0')}catch(e){}};
 /* ---------- assets ---------- */
-const IM={},SH={},FX={};
+const IM={},SH={},RM={},FX={};
 const load=u=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(i);i.src=u});
-const ready=Promise.all([...Object.entries(A.spr).map(async([k,u])=>{const i=await load(u);IM[k]=i;const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const g=c.getContext('2d');g.drawImage(i,0,0);g.globalCompositeOperation='source-in';g.fillStyle='rgba(58,32,12,.4)';g.fillRect(0,0,c.width,c.height);SH[k]=c}),
+const ready=Promise.all([...Object.entries(A.spr).map(async([k,u])=>{const i=await load(u);IM[k]=i;const c=document.createElement('canvas');c.width=i.width;c.height=i.height;const g=c.getContext('2d');g.drawImage(i,0,0);g.globalCompositeOperation='source-in';g.fillStyle='rgba(58,32,12,.55)';g.fillRect(0,0,c.width,c.height);SH[k]=c;const r=document.createElement('canvas');r.width=i.width;r.height=i.height;const q=r.getContext('2d');q.drawImage(i,0,0);q.globalCompositeOperation='source-in';q.fillStyle='rgba(255,249,230,.85)';q.fillRect(0,0,r.width,r.height);RM[k]=r}),
  ...Object.entries(A.fx).map(async([k,u])=>{FX[k]=await load(u)})]);
 /* ---------- sound ---------- */
 let AC=null,muted=false,nb=null,lastT=0;
@@ -131,6 +164,7 @@ const fx=[],keys=new Set();
 const cam={x:500,y:320,z:1,tx:500,ty:320,tz:1};
 let cw=800,ch=500,dpr=1,P={};
 const liveS=()=>sticks.filter(s=>s.st==='rest');
+let custom=null,layersOn=false;const curN=()=>custom||ROUNDS[rd].n,bk=()=>rd+'-'+curN();
 function readP(){const c=getComputedStyle(document.documentElement),g=n=>c.getPropertyValue(n).trim();P={sheet:g('--sheet'),grid:g('--grid'),case_:g('--case'),line:g('--line'),blue:g('--blue'),red:g('--red'),gold:g('--gold')}}
 readP();new MutationObserver(readP).observe(document.documentElement,{attributes:true});matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change',readP);
 /* ---------- geometry ---------- */
@@ -148,7 +182,7 @@ function stableNow(Y){if(Y.layer===0)return true;const sup=[];
 function assignLayers(){const o=sticks.filter(s=>s.st==='rest').sort((a,b)=>a.z-b.z||a.id-b.id);
  for(const s of o){let l=0;for(const j of o){if(j===s)break;if(segInfo(s,j).d<2*R-.3)l=Math.max(l,j.layer+1)}s.layer=l}o.forEach(s=>s.z=s.layer*T)}
 /* ---------- world / camera ---------- */
-function setWorld(){land=innerWidth>=innerHeight*.95;WW=land?1000:640;WH=land?640:900;trayCols=land?6:4;trayH=Math.ceil(24/trayCols)*13+20;trayY=WH-trayH-16;CX=WW/2;CY=trayY/2;cs=((WW-60)/trayCols-14)/L}
+function setWorld(){land=innerWidth>=innerHeight*.95;WW=land?1000:640;WH=land?640:900;trayCols=land?8:5;trayH=Math.ceil(40/trayCols)*13+20;trayY=WH-trayH-16;CX=WW/2;CY=trayY/2;cs=((WW-60)/trayCols-14)/L}
 const bs=()=>Math.min((cw-16)/WW,(ch-16)/WH);
 function clampCam(c,z){const hw=cw/(2*bs()*z),hh=ch/(2*bs()*z);c.x=hw>=WW/2?WW/2:clamp(c.x,hw,WW-hw);c.y=hh>=WH/2?WH/2:clamp(c.y,hh,WH-hh)}
 function setCam(x,y,z,snapIt){z=clamp(z,1,3.6);const c={x,y};clampCam(c,z);cam.tx=c.x;cam.ty=c.y;cam.tz=z;if(snapIt||calm){cam.x=c.x;cam.y=c.y;cam.z=z}}
@@ -159,29 +193,27 @@ function resize(){const r=stage.getBoundingClientRect();cw=r.width;ch=r.height;d
 new ResizeObserver(resize).observe(stage);
 /* ---------- piles ---------- */
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=rnd()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a}
-function newPile(){setWorld();resize();setCam(WW/2,WH/2,1,true);const c=ROUNDS[rd],sf=land?1:.72;
- const cols=[];while(cols.length<c.n)cols.push(...shuffle(c.pal.slice()));cols.length=c.n;shuffle(cols);
+function newPile(){setWorld();resize();setCam(WW/2,WH/2,1,true);const c=ROUNDS[rd],n=curN(),sf=land?1:.72,sq=Math.sqrt(n/c.n),rx=Math.min(c.rx*sq*sf,WW/2-80),ry=Math.min(c.ry*sq*sf,trayY/2-70);
+ const cols=[];while(cols.length<n)cols.push(...shuffle(c.pal.slice()));cols.length=n;shuffle(cols);
  sticks=cols.map((col,i)=>{const ang=rnd()*6.283,r=Math.sqrt(rnd());
-  return{id:nid++,col,x:CX+Math.cos(ang)*c.rx*sf*r,y:CY+Math.sin(ang)*c.ry*sf*r,a:rnd()*Math.PI,vx:(rnd()-.5)*20,vy:(rnd()-.5)*20,w:(rnd()-.5)*6,z:12+rnd()*8,zp:20,vz:0,layer:0,st:'wait',delay:i*.085+rnd()*.03,slp:0}});
- total=c.n;count=0;sel=null;kbGrab=false;failI=null;base=null;fx.length=0;tut=null;dropT=0;acc=0;S='drop';
+  return{id:nid++,col,x:CX+Math.cos(ang)*rx*r,y:CY+Math.sin(ang)*ry*r,a:rnd()*Math.PI,vx:(rnd()-.5)*20,vy:(rnd()-.5)*20,w:(rnd()-.5)*6,z:12+rnd()*8,zp:20,vz:0,layer:0,st:'wait',delay:i*Math.min(.085,2.6/n)+rnd()*.03,slp:0}});
+ total=n;count=0;sel=null;kbGrab=false;failI=null;base=null;fx.length=0;tut=null;dropT=0;acc=0;S='drop';
  if(calm){let n=0;while(!physStep(H)&&n++<2500);for(const s of sticks){s.st='rest';s.vx=s.vy=s.w=0}finishDrop()}
  else announce('Dropping '+total+' sticks');
  ui()}
 function restore(){setWorld();sticks=snap.map(o=>({...o,st:'rest',vx:0,vy:0,w:0,zp:o.z}));count=0;total=sticks.length;sel=null;kbGrab=false;failI=null;base=null;fx.length=0;S='ready';pickTut();setCam(WW/2,WH/2,1,true);announce('Pile reset');ui()}
 function finishDrop(){assignLayers();snap=sticks.map(s=>({id:s.id,col:s.col,x:s.x,y:s.y,a:s.a,z:s.z,layer:s.layer}));S='ready';pickTut();announce('Pile settled. '+total+' sticks.');ui()}
-function pathFree(s,dx,dy){const l=liveS(),st=new Map(l.map(y=>[y,stableNow(y)])),ox=s.x,oy=s.y;let ok=false;
- for(let d=0;d<=520;d+=3){s.x=ox+dx*d;s.y=oy+dy*d;let free=true;
-  if(s.x<8||s.x>WW-8||s.y<8||s.y>WH-8){ok=false;break}
-  for(const y of l){if(y===s)continue;const c=segInfo(s,y).d;
-   if(y.layer===s.layer&&c<2*R+1.5){ok=false;s.x=ox;s.y=oy;return false}
-   if(y.layer>s.layer&&st.get(y)&&!stableNow(y)){s.x=ox;s.y=oy;return false}
-   if(c<2*R+3)free=false}
-  if(free&&d>60){ok=true;break}}
+function pathFree(s,dx,dy){const l=liveS(),same=l.filter(y=>y!==s&&y.layer===s.layer),dep=l.filter(y=>y!==s&&y.layer===s.layer+1&&stableNow(y)&&segInfo(s,y).d<2*R+1),ox=s.x,oy=s.y;let ok=false;
+ for(let d=0;d<=520;d+=3){s.x=ox+dx*d;s.y=oy+dy*d;
+  if(s.x<8||s.x>WW-8||s.y<8||s.y>WH-8)break;
+  for(const y of same)if(segInfo(s,y).d<2*R+1.5){s.x=ox;s.y=oy;return false}
+  for(const y of dep)if(!stableNow(y)){s.x=ox;s.y=oy;return false}
+  if(d>60){let free=true;for(const y of l)if(y!==s&&segInfo(s,y).d<2*R+3){free=false;break}if(free){ok=true;break}}}
  s.x=ox;s.y=oy;return ok}
-function pickTut(){tut=null;if(tutDone)return;const l=liveS();let b=1e9;
- for(const s of l){const dx=Math.cos(s.a),dy=Math.sin(s.a);const f=pathFree(s,dx,dy)?1:pathFree(s,-dx,-dy)?-1:0;if(!f)continue;s.fd=f;
-  let n=0;for(const j of l)if(j!==s&&segInfo(s,j).d<2*R+3)n++;const sc=n*10-s.layer+rnd()*.5;if(sc<b){b=sc;tut=s}}
- if(!tut)tut=l.sort((a,c)=>c.layer-a.layer)[0]}
+function pickTut(){tut=null;if(tutDone)return;const l=liveS();
+ const c=l.map(s=>{let n=0;for(const j of l)if(j!==s&&segInfo(s,j).d<2*R+3)n++;return{s,sc:n*10-s.layer+rnd()*.5}}).sort((a,b)=>a.sc-b.sc);
+ for(const{s}of c){const dx=Math.cos(s.a),dy=Math.sin(s.a),f=pathFree(s,dx,dy)?1:pathFree(s,-dx,-dy)?-1:0;if(f){s.fd=f;tut=s;return}}
+ tut=l.sort((a,b)=>b.layer-a.layer)[0]}
 /* ---------- drop physics ---------- */
 const below=(j,s)=>j.z<s.zp-1e-3||(Math.abs(j.z-s.zp)<=1e-3&&j.id<s.id);
 function kick(s,sj,vi,f){const k=Math.min(vi,40)*f;let ang=rnd()*6.283;
@@ -220,8 +252,8 @@ function collect(X){snd.click();fx.push({k:'stars',x:X.x,y:X.y,t:0,d:.8,w:90});c
  const i=count-1,col=i%trayCols,row=i/trayCols|0,sw=(WW-60)/trayCols;
  X.st='fly';X.f={t:0,d:calm?.001:.55,x0:X.x,y0:X.y,a0:X.a,x1:30+sw*(col+.5),y1:trayY+17+row*13,a1:Math.sin(i*7.1)*.03};
  sel=null;kbGrab=false;drag=null;base=null;announce('Collected '+nm(X)+' stick. '+count+' of '+total);
- if(!liveS().length){S='over';failI=null;best[rd]=Math.max(best[rd],count);save();announce('Pile cleared')}ui()}
-function fail(Y){const b=base.get(Y);S='over';failI={y:Y,t:0,gx:b.x,gy:b.y,ga:b.a};best[rd]=Math.max(best[rd],count);save();snd.rattle();
+ if(!liveS().length){S='over';failI=null;best[bk()]=Math.max(best[bk()]||0,count);save();announce('Pile cleared')}ui()}
+function fail(Y){const b=base.get(Y);S='over';failI={y:Y,t:0,gx:b.x,gy:b.y,ga:b.a};best[bk()]=Math.max(best[bk()]||0,count);save();snd.rattle();
  if(!calm)shake=.5;drag=null;kbGrab=false;keys.clear();focusOn(Y);announce('The '+nm(Y)+' stick moved. Attempt over. Collected '+count+' of '+total);ui()}
 function focusOn(Y){if(cam.tz>1)setCam(Y.x,Y.y,cam.tz)}
 /* ---------- pointer ---------- */
@@ -271,10 +303,12 @@ function update(dt){clock+=dt;
  if(failI)failI.t+=dt;if(shake>0)shake=Math.max(0,shake-dt*1.4);
  const f=calm?1:1-Math.exp(-dt*9);cam.x+=(cam.tx-cam.x)*f;cam.y+=(cam.ty-cam.y)*f;cam.z+=(cam.tz-cam.z)*f}
 function capsule(g,s,rad){const[x1,y1,x2,y2]=ends(s),a=s.a;g.beginPath();g.arc(x2,y2,rad,a-Math.PI/2,a+Math.PI/2);g.arc(x1,y1,rad,a+Math.PI/2,a+Math.PI*1.5);g.closePath()}
-function drawStick(g,s,jx,jy){const img=IM[s.col];if(!img)return;const sc=(s.sc||1)*(s.st==='tray'||s.st==='fly'?1:1+s.z*.008),k=L/img.width*sc,z=s.st==='fly'?6:s.z,ox=z*.9+1.8,oy=z*1.2+2.4;
- g.save();g.translate(s.x+(jx||0),s.y+(jy||0));g.rotate(s.a);g.scale(k,k);
- g.drawImage(SH[s.col],-img.width/2+ox/k*Math.cos(-s.a)-oy/k*Math.sin(-s.a),-img.height/2+ox/k*Math.sin(-s.a)+oy/k*Math.cos(-s.a));
- g.drawImage(img,-img.width/2,-img.height/2);g.restore()}
+function drawStick(g,s,jx,jy){const img=IM[s.col];if(!img)return;const tr=s.st==='tray'||s.st==='fly',sc=(s.sc||1)*(tr?1:1+s.z*.008),k=L/img.width*sc,z=s.st==='fly'?6:s.z,w=img.width,h=img.height,X=s.x+(jx||0),Y=s.y+(jy||0);
+ const sh=(ox,oy,al)=>{g.save();g.globalAlpha=al;g.translate(X+ox,Y+oy);g.rotate(s.a);g.scale(k,k);g.drawImage(SH[s.col],-w/2,-h/2);g.restore()};
+ sh(z*1.5+2.6,z*1.9+3.4,.6);sh(z*.7+1.2,z*.9+1.6,.85);
+ g.save();g.translate(X,Y);g.rotate(s.a);g.scale(k,k);
+ if(!tr&&s.z>0){g.save();g.scale(1,1.25);g.drawImage(RM[s.col],-w/2,-h/2);g.restore()}
+ g.drawImage(img,-w/2,-h/2);g.restore()}
 function draw(){const g=ctx,u=1/(bs()*cam.z);g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,cv.width,cv.height);
  const sx=shake>0?(rnd()-.5)*shake*16:0,sy=shake>0?(rnd()-.5)*shake*16:0,k=bs()*cam.z*dpr;
  g.setTransform(k,0,0,k,(cw/2+sx)*dpr-cam.x*k,(ch/2+sy)*dpr-cam.y*k);
@@ -289,6 +323,13 @@ function draw(){const g=ctx,u=1/(bs()*cam.z);g.setTransform(1,0,0,1,0,0);g.clear
  for(const s of sticks)if(s.st==='fly')drawStick(g,s);
  if(tut&&tut.st==='rest'&&S==='ready'){g.save();g.globalAlpha=calm?.5:.35+.25*Math.sin(clock*3);g.strokeStyle=P.gold;g.lineWidth=5;g.lineJoin='round';capsule(g,tut,R+4);g.stroke();g.restore()}
  if(sel&&sel.st==='rest'&&S!=='intro'){g.save();g.strokeStyle=P.blue;g.globalAlpha=sel.moved?.9:.7;g.lineWidth=sel.moved?1.8:1.3;capsule(g,sel,R+3.2);g.stroke();g.restore()}
+
+ if(layersOn&&(S==='ready'||S==='over')){
+  if(sel&&sel.st==='rest')for(const y of sticks){if(y===sel||y.st!=='rest'||segInfo(sel,y).d>=2*R-.3)continue;g.save();g.lineWidth=2.6;g.strokeStyle=y.layer>sel.layer?'#e8742a':'#2f55b5';if(y.layer<sel.layer)g.setLineDash([6,4]);capsule(g,y,R+2.8);g.stroke();g.restore()}
+  const r=Math.max(7,10*u);g.save();g.font='700 '+(r*1.25)+'px "Patrick Hand",sans-serif';g.textAlign='center';g.textBaseline='middle';
+  for(const s of sticks){if(s.st!=='rest')continue;const sg=s.id%2?1:-1,cx=s.x+Math.cos(s.a)*L*.3*sg,cy=s.y+Math.sin(s.a)*L*.3*sg;
+   g.beginPath();g.arc(cx,cy,r,0,6.2832);g.fillStyle='hsl('+(210-Math.min(s.layer,5)*38)+' 72% 46%)';g.fill();g.lineWidth=1.6*u;g.strokeStyle='#fff';g.stroke();g.fillStyle='#fff';g.fillText(s.layer+1,cx,cy+r*.06)}
+  g.restore()}
  if(failI){const y=failI.y,t=failI.t;g.save();g.strokeStyle=P.red;g.lineWidth=1.6;g.setLineDash([5,4]);capsule(g,{x:failI.gx,y:failI.gy,a:failI.ga},R+2);g.stroke();g.setLineDash([]);g.lineWidth=2.4;g.globalAlpha=.9;capsule(g,y,R+2.5);g.stroke();g.restore();
   const p=calm?1:1+.05*Math.sin(t*8),dw=(im,w,x,yy,al)=>{if(!im)return;g.globalAlpha=al;g.drawImage(im,x-w/2*p,yy-(w*im.height/im.width)/2*p,w*p,w*im.height/im.width*p);g.globalAlpha=1};
   dw(FX.lines,170,y.x,y.y,.6);dw(FX.ring,96,y.x,y.y,1);dw(FX.bang,26,y.x+52,y.y-46,1)}
@@ -297,23 +338,28 @@ let last=0;function frame(t){const dt=Math.min(.033,(t-last)/1000||0);last=t;upd
 /* ---------- UI ---------- */
 function announce(t){live_.textContent=t}
 function note(t){msg.textContent=t}
-function ui(){$('#cnt').textContent=count+' / '+total;$('#best').textContent=best[rd];
+function ui(){$('#cnt').textContent=count+' / '+total;$('#best').textContent=best[bk()]||0;$('#nn').textContent=curN();$('#nm').disabled=curN()<=4;$('#np').disabled=curN()>=40;
  document.querySelectorAll('[data-r]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.r===rd));
  $('#undo').disabled=!(S==='ready'&&sel&&!sel.moved);$('#reset').disabled=S==='intro'||S==='drop';$('#again').disabled=S==='intro';
  acts.innerHTML='';
  if(S==='over'){const done=!liveS().length,nx=rd<3;
   msg.innerHTML=done?'Pile cleared. All '+total+' collected.':'The <strong>'+nm(failI.y)+'</strong> stick moved. Collected '+count+' of '+total+'.';
   const mk=(t,f,p)=>{const b=document.createElement('button');b.className='btn'+(p?' pri':'');b.textContent=t;b.onclick=f;acts.appendChild(b);return b};
-  const again=mk('Try again',()=>newPile(),!done);if(nx)mk('Next round ▸',()=>{rd++;newPile()},done);setTimeout(()=>again.focus({preventScroll:true}),0)}
+  const again=mk('Try again',()=>newPile(),!done);if(nx)mk('Next round ▸',()=>{rd++;custom=null;newPile()},done);setTimeout(()=>again.focus({preventScroll:true}),0)}
  else if(S==='ready'&&tut&&!tutDone)msg.textContent='Remove one without moving the others.';
  else if(S==='ready'&&sel&&sel.moved)msg.textContent='Keep going slowly. Clear the pile to collect it.';
+ else if(S==='ready'&&layersOn)msg.textContent=sel?'Orange lies on top of it. Blue lies underneath it.':'Numbers show stacking order. A higher number lies on top.';
  else if(S==='ready'&&sel)msg.textContent='Drag it slowly out of the pile.';
  else msg.textContent=''}
-document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{if(S==='intro')return;rd=+b.dataset.r;newPile()});
+document.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{if(S==='intro')return;rd=+b.dataset.r;custom=null;newPile()});
 $('#zin').onclick=()=>zoomCenter(1.35);$('#zout').onclick=()=>zoomCenter(1/1.35);$('#zfit').onclick=()=>setCam(WW/2,WH/2,1);
 $('#undo').onclick=()=>{deselect();cv.focus()};
 $('#reset').onclick=()=>{if(snap.length&&S!=='drop'){restore();cv.focus()}};
 $('#again').onclick=()=>{newPile();cv.focus()};
+const setN=d=>{custom=clamp(curN()+d,4,40);if(S==='intro'){ui();return}newPile();cv.focus()};
+$('#nm').onclick=()=>setN(-2);$('#np').onclick=()=>setN(2);
+$('#lay').onclick=e=>{layersOn=!layersOn;e.target.setAttribute('aria-pressed',layersOn);e.target.textContent='Layers '+(layersOn?'on':'off');ui()};
+const openHow=()=>$('#how').showModal();$('#helpb').onclick=openHow;$('#how0').onclick=openHow;
 $('#snd').onclick=e=>{muted=!muted;e.target.setAttribute('aria-pressed',!muted);e.target.textContent=muted?'Effects off':'Effects on'};
 function setCalm(v){calm=v;document.documentElement.dataset.calm=v?'1':'0';const b=$('#calm');b.setAttribute('aria-pressed',v);b.textContent='Calm motion '+(v?'on':'off');if(v)shake=0}
 $('#calm').onclick=()=>setCalm(!calm);setCalm(calm);

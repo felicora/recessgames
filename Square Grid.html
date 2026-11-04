@@ -37,6 +37,7 @@ fieldset{border:0;margin:6px 0;padding:0;text-align:center}legend{font:600 26px 
 #end{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
 .top{display:flex;gap:6px}
 @media(max-width:520px){.page{padding-left:44px;padding-right:12px}.sc img{width:26vw}}
+.how{max-width:34em;margin:4px 0;padding:6px 10px 10px;text-align:left}.how h2{font:700 38px Caveat,cursive;color:var(--ink);margin:0 0 4px;text-align:center}.how ol{margin:0;padding-left:1.4em}.how li{margin:5px 0}.how li::marker{font:700 26px Caveat,cursive;color:var(--red)}.how b{color:var(--ink)}.how .tip{margin:8px 0 0;font:600 24px/1.1 Caveat,cursive;color:#8a5a14;text-align:center}#menu.showhow fieldset,#menu.showhow .deco,#menu.showhow .sub{display:none}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style></head><body>
 <svg width="0" height="0" style="position:absolute"><filter id="rough"><feTurbulence baseFrequency=".04" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="4"/></filter></svg>
@@ -46,7 +47,8 @@ fieldset{border:0;margin:6px 0;padding:0;text-align:center}legend{font:600 26px 
 <fieldset data-k="vs"><legend>Who plays?</legend><button class="chip" data-v="cpu">Blue vs computer</button><button class="chip" data-v="two">Blue vs Red</button></fieldset>
 <fieldset data-k="n"><legend>Board</legend><button class="chip" data-v="3">Beginner · 4×4 dots</button><button class="chip" data-v="5">Standard · 6×6 dots</button><button class="chip" data-v="7">Advanced · 8×8 dots</button></fieldset>
 <fieldset data-k="lvl" id="lv"><legend>Computer is</legend><button class="chip" data-v="relaxed">Relaxed</button><button class="chip" data-v="standard">Standard</button><button class="chip" data-v="clever">Clever</button></fieldset>
-<button class="btn go" id="go">Start drawing</button>
+<div id="how" class="how" hidden><h2>How to play</h2><ol><li><b>Take turns.</b> Blue draws first. Tap or click between two <b>neighbouring dots</b> to draw a line. A faint preview shows where it will go. On a keyboard, use the arrow keys to travel between dots and press Enter to draw.</li><li><b>Close a box.</b> When you draw the fourth side of a little square, you claim it. It is shaded in your pen colour.</li><li><b>Claim a box, go again.</b> Completing a box gives you another turn straight away.</li><li><b>Fill the page.</b> When every line is drawn, the player with the most boxes wins and their score gets circled.</li></ol><p class="tip">Tip: try not to draw the third side of a box. It lets your opponent close it.</p></div>
+<button class="btn go" id="go">Start drawing</button><button class="btn" id="howb" aria-expanded="false" aria-controls="how">How to play</button>
 <div class="deco"><img id="d0" alt="" style="transform:rotate(-8deg)"><img id="d1" alt="" style="transform:rotate(5deg)"></div>
 </section>
 <section id="g" hidden>
@@ -140,6 +142,6 @@ cv.onkeydown=ev=>{const d={ArrowUp:[-1,0],ArrowDown:[1,0],ArrowLeft:[0,-1],Arrow
 /* flow */
 const show=g=>{$('#menu').hidden=g;$('#g').hidden=!g};
 function start(){snd.init();if(musOn&&mu.paused)mu.play().catch(()=>{});show(true);init()}
-$('#go').onclick=start;$('#again').onclick=start;$('#desk').onclick=$('#back').onclick=()=>{gid++;over=true;busy=false;pen.on=0;show(false)};
+$('#go').onclick=start;$('#howb').onclick=()=>{const o=$('#how').hidden;$('#how').hidden=!o;$('#menu').classList.toggle('showhow',o);$('#howb').textContent=o?'Back to options':'How to play';$('#howb').setAttribute('aria-expanded',o)};$('#again').onclick=start;$('#desk').onclick=$('#back').onclick=()=>{gid++;over=true;busy=false;pen.on=0;show(false)};
 $('#chg').onclick=()=>{const p=$('#pick');p.hidden=false;p.innerHTML='<b style="font:700 28px Caveat">Pick a board</b><br>'+[['3','Beginner · 4×4'],['5','Standard · 6×6'],['7','Advanced · 8×8']].map(a=>'<button class="chip" data-v="'+a[0]+'">'+a[1]+'</button>').join('');p.style.textAlign='center';p.onclick=e=>{const b=e.target.closest('.chip');if(b){cfg.n=b.dataset.v;$$('[data-k=n] .chip').forEach(c=>c.setAttribute('aria-pressed',c.dataset.v===cfg.n));start()}};p.querySelector('.chip').focus()};
 </script></body></html>
