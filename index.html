@@ -241,13 +241,13 @@ body.noscroll{overflow:hidden}
 
       <nav aria-label="Games" style="display:contents">
         <!-- Game pages are resolved at load from the ROUTES list in the script below. -->
-        <a class="obj" data-id="fortune" href="Paper%20Fortune%20Teller.html" data-gif="fortune_teller_four_fold_transparent_final.gif" style="--px:3%;--py:24.58%;--pw:46%;--ph:18.93%;--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
+        <a class="obj" data-id="fortune" href="games/Paper%20Fortune%20Teller.html" data-gif="fortune_teller_four_fold_transparent_final.gif" style="--px:3%;--py:24.58%;--pw:46%;--ph:18.93%;--n:0;--idle:snap;--dur:3.4s;--x:16.41%;--y:25%;--w:17.09%;--h:29.51%;--rot:-6deg" aria-label="Play Paper Fortune Teller">
           <span class="shadow"></span><span class="lift"><img src="fortune.png" width="350" height="340" alt=""></span><span class="label">Paper Fortune Teller<small>Open →</small></span></a>
-        <a class="obj" data-id="sticks" href="pickup-sticks.html" style="--px:50%;--py:25.42%;--pw:47%;--ph:16.63%;--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
+        <a class="obj" data-id="sticks" href="games/pickup-sticks.html" style="--px:50%;--py:25.42%;--pw:47%;--ph:16.63%;--n:1;--idle:sway;--dur:4.2s;--x:36.62%;--y:24.65%;--w:15.38%;--h:22.83%;--rot:3deg" aria-label="Play Pick-Up Sticks">
           <span class="shadow"></span><span class="lift"><img src="sticks.png" width="315" height="263" alt=""></span><span class="label">Pick-Up Sticks<small>Open →</small></span></a>
-        <a class="obj" data-id="erasers" href="games/eraser-battle.html" data-gif="eraser_battle_flip_transparent.gif" style="--px:8%;--py:45.76%;--pw:30%;--ph:9.21%;--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
+        <a class="obj" data-id="erasers" href="games/Eraser%20Battle.html" data-gif="eraser_battle_flip_transparent.gif" style="--px:8%;--py:45.76%;--pw:30%;--ph:9.21%;--n:2;--idle:tap;--dur:2.8s;--x:37.94%;--y:50.52%;--w:8.69%;--h:11.2%;--rot:-3deg" aria-label="Play Eraser Battle">
           <span class="shadow"></span><span class="lift"><img src="erasers.png" width="178" height="129" alt=""></span><span class="label">Eraser Battle<small>Open →</small></span></a>
-        <a class="obj" data-id="notebook" href="Square%20Grid.html" style="--px:42%;--py:44.07%;--pw:54%;--ph:18.91%;--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
+        <a class="obj" data-id="notebook" href="games/Square%20Grid.html" style="--px:42%;--py:44.07%;--pw:54%;--ph:18.91%;--n:3;--idle:breathe;--dur:5s;--x:50.59%;--y:38.02%;--w:16.31%;--h:23.96%;--rot:1.5deg" aria-label="Play Square Grid">
           <span class="shadow"></span><span class="lift"><img src="notebook.png" width="334" height="276" alt=""></span><span class="label">Square Grid<small>Open →</small></span></a>
         <a class="obj" data-id="caps" href="games/Bottlecaps.html" style="--ls:30%;--px:5%;--py:57.63%;--pw:34%;--ph:19.41%;--n:4;--idle:wobble;--dur:3.6s;--x:69.58%;--y:36.02%;--w:10.4%;--h:24.91%;--rot:4deg" aria-label="Play Bottle Cap Game">
           <span class="shadow"></span><span class="lift"><img src="caps.png" width="213" height="287" alt=""></span><span class="label">Bottle Cap Game<small>Open →</small></span></a>
@@ -262,7 +262,7 @@ body.noscroll{overflow:hidden}
       <audio id="bgm" src="bgm.mp3" loop preload="auto"></audio>
 
       <!-- Sits over the painted "PLAY NOW" strip; opens a random game. -->
-      <a class="play" id="play" href="Paper%20Fortune%20Teller.html" aria-label="Play now: open a random game" style="--px:10%;--py:88.14%;--pw:80%;--ph:7.13%"><img class="art" src="banner-play.png" width="647" height="136" alt=""></a>
+      <a class="play" id="play" href="games/Paper%20Fortune%20Teller.html" aria-label="Play now: open a random game" style="--px:10%;--py:88.14%;--pw:80%;--ph:7.13%"><img class="art" src="banner-play.png" width="647" height="136" alt=""></a>
     </div>
   </div>
 </main>
@@ -346,10 +346,10 @@ body.noscroll{overflow:hidden}
 
   // Where each game lives. The first path that answers is used, so a moved file only needs fixing here.
   const ROUTES = {
-    fortune:  ['Paper Fortune Teller.html', 'games/Paper Fortune Teller.html', 'games/paper-fortune-teller.html'],
-    sticks:   ['pickup-sticks.html', 'games/pickup-sticks.html', 'games/pick-up-sticks.html'],
-    erasers:  ['games/eraser-battle.html', 'games/Eraser Battle.html', 'Eraser Battle.html', 'eraser-battle.html', 'games/eraser-battle/index.html'],
-    notebook: ['Square Grid.html', 'games/Square Grid.html', 'games/square-grid.html'],
+    fortune:  ['games/Paper Fortune Teller.html', 'Paper Fortune Teller.html', 'games/paper-fortune-teller.html'],
+    sticks:   ['games/pickup-sticks.html', 'pickup-sticks.html', 'games/pick-up-sticks.html'],
+    erasers:  ['games/Eraser Battle.html', 'games/eraser-battle.html', 'Eraser Battle.html', 'eraser-battle.html', 'games/eraser-battle/index.html'],
+    notebook: ['games/Square Grid.html', 'Square Grid.html', 'games/square-grid.html'],
     caps:     ['games/Bottlecaps.html', 'games/bottlecaps.html', 'Bottlecaps.html', 'games/bottle-cap-game.html', 'games/Bottle Cap Game.html', 'Bottle Cap Game.html', 'bottle-cap-game.html', 'games/ceper.html', 'games/bottle-cap/index.html']
   };
   const exists = async u => { try { return (await fetch(encodeURI(u), { method: 'HEAD' })).ok; } catch (e) { return false; } };
